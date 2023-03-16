@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Text, StyleSheet, Image, ImageBackground } from 'react-native';
+import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Text, StyleSheet, Image, Button, StatusBar } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Login = () => (
 
 
 
-  <ImageBackground style={styles.containerfundo}
-    source={require('./src/img/fundo.png')}
-
+  <View style={styles.containerfundo}
   >
+
+    <StatusBar>
+
+    </StatusBar>
     <KeyboardAvoidingView style={styles.containerLogin}>
 
       <View style={styles.logo}>
@@ -19,7 +22,9 @@ const Login = () => (
 
       </View>
 
+
       <View style={styles.fundo}>
+
 
 
 
@@ -42,20 +47,39 @@ const Login = () => (
             onChangeText={() => { }}
           />
 
-          <TouchableOpacity>
-            <Text> Acessar </Text>
+
+
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+
+          >
+            <Text style={styles.buttonTextStyle}>Login</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Text>  Criar Conta </Text>
-          </TouchableOpacity>
+
+
+
+
+
         </View>
 
 
       </View>
 
+
+
+
+
+
+
+
+
+
+
+
     </KeyboardAvoidingView >
-  </ImageBackground>
+  </View>
 
 
 );
@@ -71,20 +95,32 @@ const styles = StyleSheet.create({
 
 
   },
+  buttonStyle: {
+
+
+    backgroundColor: "#145D59",
+    padding: 10,
+    margin: 10,
+    borderRadius: 20
+  },
   containerLogin: {
 
     flex: 1,
-    width: '100%'
+
 
   },
   fundo: {
-    flex: 1,
+
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'blac'
+
+
   },
   logo: {
-    alignItems: 'center'
+    padding: 20,
+    alignItems: 'center',
+
+
 
 
   },
@@ -97,15 +133,24 @@ const styles = StyleSheet.create({
   },
   input: {
 
-    backgroundColor: "#FFF",
+    backgroundColor: "#E1E1E1",
     color: '#222',
     marginBottom: 15,
-    width: '90%',
+    width: '85%',
     fontSize: 17,
-    borderRadius: 7,
-    padding: 10,
-    marginTop: 10
-  }
+    borderRadius: 20,
+    padding: 15,
+    marginTop: 30
+
+  }, buttonTextStyle: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    width: 180,
+    justifyContent: 'center'
+
+
+  },
+
 
 });
 export default Login;
