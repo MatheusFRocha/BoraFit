@@ -19,24 +19,24 @@ export default function Bora() {
 
   const [opacity] = useState(new Animated.Value(0));
 
-  const [logo] = useState(new Animated.ValueXY({ x: 300, y: 135 }));
+
 
 
 
   useEffect(() => {
-    KeyboardDidShowListener = Keyboard.addListener('keyboardDidShow', KeyboardDidShow);
-    KeyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
 
 
     Animated.parallel([
       Animated.spring(offset.y, {
         toValue: 0,
         speed: 4,
-        bounciness: 20
+        bounciness: 20,
+        useNativeDriver: true,
       }),
       Animated.timing(opacity, {
         toValue: 1,
         duration: 200,
+        useNativeDriver: true,
 
 
 
@@ -46,48 +46,19 @@ export default function Bora() {
     ]).start();
 
   }, [])
-  function KeyboardDidShow() {
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 150,
-        duration: 100,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 135,
-        duration: 100,
 
-
-      })
-    ]).start();
-  }
-
-  function keyboardDidHide() {
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 300,
-        duration: 100,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 135,
-        duration: 100,
-
-      })
-    ]).start();
-  }
 
 
   return (
     <KeyboardAvoidingView style={styles.background}>
       <View style={styles.containerLogo}>
-        <Animated.Image
-          style={{ width: logo.x, height: logo.y, }
+        <Image style={{ width: 200, height: 135 }}
 
-          }
 
           source={require('./src/img/logo.png')}
         >
 
-        </Animated.Image>
+        </Image>
 
       </View>
 
