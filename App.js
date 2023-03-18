@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Animated
+  Animated,
+  Keyboard
 } from 'react-native';
 
 
@@ -16,25 +17,77 @@ export default function Bora() {
 
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
 
-  useEffect(() => {
+  const [opacity] = useState(new Animated.Value(0));
 
-    Animated.spring(offset.y, {
-      toValue: 0,
-      speed: 4,
-      bounciness: 20
-    }).start();
+  const [logo] = useState(new Animated.ValueXY({ x: 300, y: 135 }));
+
+
+
+  useEffect(() => {
+    KeyboardDidShowListener = Keyboard.addListener('keyboardDidShow', KeyboardDidShow);
+    KeyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+
+
+    Animated.parallel([
+      Animated.spring(offset.y, {
+        toValue: 0,
+        speed: 4,
+        bounciness: 20
+      }),
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 200,
+
+
+
+      })
+
+
+    ]).start();
 
   }, [])
+  function KeyboardDidShow() {
+    Animated.parallel([
+      Animated.timing(logo.x, {
+        toValue: 150,
+        duration: 100,
+      }),
+      Animated.timing(logo.y, {
+        toValue: 135,
+        duration: 100,
+
+
+      })
+    ]).start();
+  }
+
+  function keyboardDidHide() {
+    Animated.parallel([
+      Animated.timing(logo.x, {
+        toValue: 300,
+        duration: 100,
+      }),
+      Animated.timing(logo.y, {
+        toValue: 135,
+        duration: 100,
+
+      })
+    ]).start();
+  }
 
 
   return (
     <KeyboardAvoidingView style={styles.background}>
       <View style={styles.containerLogo}>
-        <Image
+        <Animated.Image
+          style={{ width: logo.x, height: logo.y, }
+
+          }
+
           source={require('./src/img/logo.png')}
         >
 
-        </Image>
+        </Animated.Image>
 
       </View>
 
@@ -42,6 +95,8 @@ export default function Bora() {
 
       <Animated.View style={[styles.container,
       {
+
+        opacity: opacity,
         transform: [
           {
             translateY: offset.y
