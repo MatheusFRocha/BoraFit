@@ -1,156 +1,155 @@
-import React from 'react';
-import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Text, StyleSheet, Image, Button, StatusBar } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  KeyboardAvoidingView,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Animated
+} from 'react-native';
 
-const Login = () => (
 
 
+export default function Bora() {
 
-  <View style={styles.containerfundo}
-  >
+  const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
 
-    <StatusBar>
+  useEffect(() => {
 
-    </StatusBar>
-    <KeyboardAvoidingView style={styles.containerLogin}>
+    Animated.spring(offset.y, {
+      toValue: 0,
+      speed: 4,
+      bounciness: 20
+    }).start();
 
-      <View style={styles.logo}>
+  }, [])
+
+
+  return (
+    <KeyboardAvoidingView style={styles.background}>
+      <View style={styles.containerLogo}>
         <Image
           source={require('./src/img/logo.png')}
+        >
+
+        </Image>
+
+      </View>
+
+
+
+      <Animated.View style={[styles.container,
+      {
+        transform: [
+          {
+            translateY: offset.y
+          }
+        ]
+      }
+
+
+
+
+      ]}>
+
+        <TextInput style={styles.input}
+          placeholder='Email'
+          autoCorrect={false}
+          onChangeText={() => { }}
+        />
+
+
+
+        <TextInput style={styles.input}
+          placeholder='Senha'
+          autoCorrect={false}
+          onChangeText={() => { }}
 
         />
 
-      </View>
 
+        <TouchableOpacity style={styles.botao} >
+          <Text style={styles.botaoenvio} >Acesso</Text>
+        </TouchableOpacity>
 
-      <View style={styles.fundo}>
-
-
-
-
-
-
-        <View style={styles.container}>
-
-          <TextInput style={styles.input}
-
-            placeholder="Email"
-            autoCorrect={false}
-            onChangeText={() => { }}
-          />
-
-          <TextInput
-            style={styles.input}
-
-            placeholder="Senha"
-            autoCorrect={false}
-            onChangeText={() => { }}
-          />
-
-
-
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-
-          >
-            <Text style={styles.buttonTextStyle}>Login</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.botaoRegistro} >
+          <Text style={styles.RegistroText}>Crie uma conta agora</Text>
+        </TouchableOpacity>
 
 
 
 
 
-
-        </View>
-
-
-      </View>
-
-
-
-
-
-
-
+      </Animated.View>
 
 
 
 
 
     </KeyboardAvoidingView >
-  </View>
-
-
-);
 
 
 
+  );
+}
 const styles = StyleSheet.create({
-
-  containerfundo: {
-    flex: 1,
-    flexDirection: 'column'
-
-
-
-  },
-  buttonStyle: {
-
-
-    backgroundColor: "#145D59",
-    padding: 10,
-    margin: 10,
-    borderRadius: 20
-  },
-  containerLogin: {
-
-    flex: 1,
-
-
-  },
-  fundo: {
+  background: {
+    flex: 0.9,
 
     justifyContent: 'center',
     alignItems: 'center',
-
-
+    backgroundColor: '#fff'
   },
-  logo: {
-    padding: 20,
-    alignItems: 'center',
-
-
-
+  containerLogo: {
+    flex: 1,
+    justifyContent: 'center',
 
   },
   container: {
+    flex: 1,
 
     alignItems: 'center',
-    justifyContent: 'center',
     width: '90%',
+    marginTop: 0,
+    paddingBottom: 30,
+
+
 
   },
   input: {
-
-    backgroundColor: "#E1E1E1",
-    color: '#222',
+    backgroundColor: '#E1E1E1',
+    width: '90%',
     marginBottom: 15,
-    width: '85%',
+    color: '#222',
     fontSize: 17,
-    borderRadius: 20,
-    padding: 15,
-    marginTop: 30
-
-  }, buttonTextStyle: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    width: 180,
-    justifyContent: 'center'
-
+    borderRadius: 7,
+    padding: 10,
 
   },
+  botao: {
+    backgroundColor: 'green',
+    width: '90%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 45,
+    borderRadius: 7,
+
+  },
+  botaoenvio: {
+    color: '#fff',
+    fontSize: 18,
+
+  },
+  botaoRegistro: {
+    marginTop: 10,
+    color: '#fff',
+
+  },
+  RegistroText: {
+    color: 'green'
+  }
 
 
 });
-export default Login;
