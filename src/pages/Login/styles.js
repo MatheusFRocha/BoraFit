@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         padding: 10,
 
+
     },
     botao: {
         backgroundColor: 'green',
@@ -43,10 +44,12 @@ const styles = StyleSheet.create({
         height: 45,
         borderRadius: 7,
 
+
     },
     botaoenvio: {
         color: '#fff',
         fontSize: 18,
+
 
     },
     botaoRegistro: {

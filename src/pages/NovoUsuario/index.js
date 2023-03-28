@@ -11,25 +11,20 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from './styles';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../../config/firebase'
 
-
-export default function NovoUsuario() {
-    const [nome, setNome] = useState("")
-    const [sobreNome, setSobreNome] = useState("")
-
+export default function NovoUsuario({ navigation }) {
 
     const [email, setEmail] = useState("")
     const [password, setSenha] = useState("")
-    const [sexo, setSexo] = useState("")
-    const [nascimento, setNascimento] = useState("")
-    const [peso, setPeso] = useState("")
-    const [alura, setAltura] = useState("")
     const [errorLogin, setErrorLogin] = useState("")
 
 
     async function createUser() {
         await createUserWithEmailAndPassword(auth, email, password)
             .then(value => {
+                navigation.navigate("Login")
                 console.log('cadastrado com sucesso \n' + value.user.uid)
             })
             .catch(error => console.log(error));
@@ -67,7 +62,7 @@ export default function NovoUsuario() {
     return (
         <KeyboardAvoidingView style={styles.background}>
             <View style={styles.containerLogo}>
-                <Image style={{ width: 100, height: 80 }}
+                <Image style={{ width: 170, height: 80 }}
 
 
                     source={require('../img/logo.png')}
@@ -94,20 +89,7 @@ export default function NovoUsuario() {
 
 
             ]}>
-                <TextInput style={styles.input}
-                    placeholder='Nome '
-                    type="text"
-                    autoCorrect={false}
-                    onChangeText={(text) => setNome(text)}
-                    value={nome}
-                />
-                <TextInput style={styles.input}
-                    placeholder='Sobrenome '
-                    type="text"
-                    autoCorrect={false}
-                    onChangeText={(text) => setNome(text)}
-                    value={sobreNome}
-                />
+
 
                 <TextInput style={styles.input}
                     placeholder='Email'
@@ -129,35 +111,6 @@ export default function NovoUsuario() {
 
                 />
 
-
-                <TextInput style={styles.input}
-                    placeholder='text'
-                    type="text"
-                    autoCorrect={false}
-                    onChangeText={(text) => setSexo(text)}
-                    value={sexo}
-                />
-                <TextInput style={styles.input}
-                    placeholder='Data de nascimento'
-                    type="datetime"
-                    autoCorrect={false}
-                    onChangeText={(text) => setNascimento(text)}
-                    value={nascimento}
-                />
-                <TextInput style={styles.input}
-                    placeholder='Peso '
-                    type="int"
-                    autoCorrect={false}
-                    onChangeText={(text) => setPeso(text)}
-                    value={peso}
-                />
-                <TextInput style={styles.input}
-                    placeholder='Altura em cm '
-                    type="int"
-                    autoCorrect={false}
-                    onChangeText={(text) => setPeso(text)}
-                    value={alura}
-                />
 
 
                 {errorLogin === true ?
@@ -185,6 +138,13 @@ export default function NovoUsuario() {
                     </TouchableOpacity>
                     :
                     <TouchableOpacity style={styles.botao}
+
+                        onPress={createUser}
+
+
+
+
+
 
 
 
