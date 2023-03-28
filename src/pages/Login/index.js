@@ -10,18 +10,52 @@ import {
 
 } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-
-
 import styles from './styles';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../../config/firebase'
 
-export const Login = () => {
-    const [Email, setEmail] = useState("")
-    const [Senha, setSenha] = useState("")
+
+export default function Login({ navigation }) {
+    const [email, setEmail] = useState("")
+    const [password, setSenha] = useState("")
     const [errorLogin, setErrorLogin] = useState("")
 
-    const loginFirebase = () => {
+    async function createUser() {
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then(value => {
+                console.log('cadastrado com sucesso \n' + value.user.uid)
+            })
+            .catch(error => console.log(error));
+    };
 
+    async function login() {
+        await signInWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                let user = userCredential.user;
+
+                navigation.navigate("Home", { idUser: user.uid })
+                console.log(user.uid)
+            })
+            .catch(error => console.log(error));
+    };
+    async function sair() {
+        await signOut(auth)
+            .then(() => {
+                console.log('saiu');
+            }).catch(error => console.log(error));
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -97,8 +131,8 @@ export const Login = () => {
                     placeholder='Email'
                     type="email"
                     autoCorrect={false}
-                    onChangeText={(text) => { setEmail(text) }}
-                    value={Email}
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
                 />
 
 
@@ -108,45 +142,79 @@ export const Login = () => {
                     type="password"
                     secureTextEntry={true}
                     autoCorrect={false}
-                    onChangeText={(text) => { setSenha(text) }}
-                    value={Senha}
+                    onChangeText={(text) => setSenha(text)}
+                    value={password}
 
                 />
+                {errorLogin === true ?
+                    <View style={styles.containerAlert}>
+                        <MaterialCommunityIcons
+                            name='alert-circle'
+                            size={24}
+                            color="#BDBDBD"
+
+                        />
+
+                        <Text style={styles.avisoAlerta}> Email ou senha invalidos</Text>
+                    </View>
+                    :
+                    <View />
+
+                }
+
+                {email === "" || password === "" ?
+
+                    <TouchableOpacity style={styles.botao}
+                        disabled={true}
+                    >
+                        <Text style={styles.botaoenvio} >Acesso</Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity style={styles.botao}
+                        onPress={login}
 
 
+                    >
+                        <Text style={styles.botaoenvio} >Acesso</Text>
+                    </TouchableOpacity>
+
+                }
+                <TouchableOpacity style={styles.botaoRegistro}
+                    onPress={createUser}
+                >
+                    <Text style={styles.RegistroText}
 
 
+                    >Crie uma conta agora</Text>
 
-
-                <TouchableOpacity style={styles.botao} >
-                    <Text style={styles.botaoenvio} >Acesso</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.botaoRegistro} >
-                    <Text style={styles.RegistroText}>Crie uma conta agora</Text>
+                <TouchableOpacity style={styles.botaoRegistro}
+                    onPress={sair}
+                >
+                    <Text style={styles.RegistroText}
+
+
+                    >sair</Text>
+
                 </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
             </Animated.View>
 
-
-            {errorLogin === true ?
-                <View style={styles.containerAlert}>
-                    <MaterialCommunityIcons
-                        name='alert-circle'
-                        size={24}
-                        color="#BDBDBD"
-
-                    />
-
-                    <Text style={styles.avisoAlerta}> Email ou senha invalidos</Text>
-                </View>
-                :
-                <View />
-
-            }
 
 
         </KeyboardAvoidingView >
@@ -155,4 +223,4 @@ export const Login = () => {
 
     );
 }
-export default Login;
+
