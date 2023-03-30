@@ -21,11 +21,9 @@ export default function Login({ navigation }) {
     const [errorLogin, setErrorLogin] = useState("")
 
     async function createUser() {
-        await createUserWithEmailAndPassword(auth, email, password)
-            .then(value => {
-                console.log('cadastrado com sucesso \n' + value.user.uid)
-            })
-            .catch(error => console.log(error));
+
+        navigation.navigate("NovoUsuario")
+
     };
 
     async function login() {
@@ -189,15 +187,7 @@ export default function Login({ navigation }) {
 
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.botaoRegistro}
-                    onPress={sair}
-                >
-                    <Text style={styles.RegistroText}
 
-
-                    >sair</Text>
-
-                </TouchableOpacity>
 
 
 

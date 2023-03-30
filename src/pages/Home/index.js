@@ -1,15 +1,15 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
+import MyTabs from '../Menu/index'
 
-export default function Home({ navigation }) {
+
+
+export default function Home() {
+
     return (
-        <View>
-            <Text> Home</Text>
 
-            <Button
-                title="Perfil"
-                onPress={() => navigation.navigate('Login')} />
-        </View>
+        <MyTabs />
+
 
     );
 
