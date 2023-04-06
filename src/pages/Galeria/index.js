@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-export default function Perfil() {
+export default function Galeria() {
     return (
         <View></View>
     );

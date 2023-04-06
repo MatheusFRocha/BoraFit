@@ -28,13 +28,17 @@ export default function Login({ navigation }) {
 
     async function login() {
         await signInWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
+            .then((userCredential) => {
                 let user = userCredential.user;
 
                 navigation.navigate("Home", { idUser: user.uid })
                 console.log(user.uid)
             })
-            .catch(error => console.log(error));
+            .catch((error) => {
+                setErrorLogin(true)
+                let errorCode = error.code;
+                let errorMassage = error.message;
+            });
     };
     async function sair() {
         await signOut(auth)
