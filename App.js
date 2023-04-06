@@ -10,16 +10,32 @@ import Perfil from './src/pages/Perfil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Galeria from './src/pages/Galeria';
-
+import { Auth } from 'firebase/auth';
+import { FirebaseAuthTypes, firebase } from '@react-native-firebase/auth';
 
 
 const Stack = createStackNavigator();
 
+
+
+
+
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login
-      ">
+
+
+
+
+
+
+
+
+
+
+
+    < NavigationContainer >
+      <Stack.Navigator initialRouteName='Home' >
         <Stack.Screen
           options={{
             title: '',
@@ -73,6 +89,6 @@ export default function App() {
 
         />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }

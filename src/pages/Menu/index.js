@@ -24,6 +24,8 @@ export default function MyTabs() {
             }} name="Settings" component={Perfil} />
 
 
+
+
         </Tab.Navigator>
     );
 }

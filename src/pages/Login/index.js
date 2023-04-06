@@ -12,7 +12,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from './styles';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase'
+import { auth } from '../../config/firebase';
 
 
 export default function Login({ navigation }) {
@@ -64,6 +64,8 @@ export default function Login({ navigation }) {
 
 
 
+
+
     const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
 
     const [opacity] = useState(new Animated.Value(0));
@@ -95,6 +97,7 @@ export default function Login({ navigation }) {
         ]).start();
 
     }, [])
+
 
 
 
