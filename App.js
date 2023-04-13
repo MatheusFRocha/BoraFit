@@ -7,11 +7,15 @@ import NovoUsuario from './src/pages/NovoUsuario';
 import Home from './src/pages/Home';
 import Perfil from './src/pages/Perfil';
 
+
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Galeria from './src/pages/Galeria';
 import { Auth } from 'firebase/auth';
 import { FirebaseAuthTypes, firebase } from '@react-native-firebase/auth';
+import Configuracoes from './src/pages/Configuracoes';
+
+
 
 
 const Stack = createStackNavigator();
@@ -22,6 +26,9 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
+
+
+
   return (
 
 
@@ -35,7 +42,7 @@ export default function App() {
 
 
     < NavigationContainer >
-      <Stack.Navigator initialRouteName='Home' >
+      <Stack.Navigator initialRouteName='Login' >
         <Stack.Screen
           options={{
             title: '',
@@ -44,6 +51,16 @@ export default function App() {
           }}
           name="Login"
           component={Login}
+
+        />
+        <Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="Configuracoes"
+          component={Configuracoes}
 
         />
         <Stack.Screen

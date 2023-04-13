@@ -3,7 +3,8 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Galeria from '../Galeria';
-import Perfil from '../Perfil';
+import Configuracoes from '../Configuracoes';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -11,6 +12,7 @@ const Tab = createBottomTabNavigator();
 export default function MyTabs() {
     return (
         <Tab.Navigator
+
 
         >
 
@@ -21,7 +23,7 @@ export default function MyTabs() {
             <Tab.Screen options={{
 
                 headerTransparent: true, headerShown: false,
-            }} name="Settings" component={Perfil} />
+            }} name="Configurações" component={Configuracoes} />
 
 
 

@@ -1,31 +1,94 @@
-import React, { useEffect, useState } from 'react';
-import { auth } from '../../config/firebase';
-import { View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+    View,
+    KeyboardAvoidingView,
+    Image,
+    TextInput,
+    TouchableOpacity,
+    Text,
+    Animated,
+
+} from 'react-native';
+import { MaterialCommunityIcons } from "@expo/vector-icons"
+import styles from './styles';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../../config/firebase'
+
+export default function Perfil({ navigation }) {
+
+    const [email, setEmail] = useState("")
+    const [password, setSenha] = useState("")
+    const [errorLogin, setErrorLogin] = useState("")
 
 
-export default function Perfil({ navigation, route }) {
-    const [perfil, setPerfil] = useState([])
-    const database = auth.firestore()
-
-
-
-    function criarPerfil(id) {
-        database.collection(route.params.idUser).doc(id).create()
-    }
-    useEffect(() => {
-        database.collection(route.params.idUser).onSnapshot((query) => {
-            const list = []
-            query.forEach((doc) => {
-                list.push({ ...doc.data(), id: doc.id })
-
+    async function createUser() {
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then(value => {
+                navigation.navigate("Login")
+                console.log('cadastrado com sucesso \n' + value.user.uid)
             })
-            setPerfil(list)
-        })
-    }, [])
+            .catch(error => console.log(error));
+    }
+
 
 
 
     return (
-        <View></View>
+        <KeyboardAvoidingView style={styles.background}>
+
+
+
+
+
+
+
+            <TextInput style={styles.input}
+                placeholder='Email'
+                type="email"
+                autoCorrect={false}
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+            />
+
+
+
+            <TextInput style={styles.input}
+                placeholder='Senha'
+                type="password"
+                secureTextEntry={true}
+                autoCorrect={false}
+                onChangeText={(text) => setSenha(text)}
+                value={password}
+
+            />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </KeyboardAvoidingView >
+
+
+
     );
 }
