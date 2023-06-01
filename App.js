@@ -11,10 +11,9 @@ import Perfil from './src/pages/Perfil';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Galeria from './src/pages/Galeria';
-import { Auth } from 'firebase/auth';
-import { FirebaseAuthTypes, firebase } from '@react-native-firebase/auth';
-import Configuracoes from './src/pages/Configuracoes';
 
+import Configuracoes from './src/pages/Configuracoes';
+import Mensagens from './src/pages/Mensagens';
 
 
 
@@ -103,6 +102,18 @@ export default function App() {
           }}
           name="Home"
           component={Home}
+
+        />
+
+
+        <Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="Mensagens"
+          component={Mensagens}
 
         />
       </Stack.Navigator>

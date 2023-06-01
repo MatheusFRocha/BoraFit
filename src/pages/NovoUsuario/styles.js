@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
     },
     botaoRegistro: {
-        marginTop: 10,
+
         color: '#fff',
 
     },

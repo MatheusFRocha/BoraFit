@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     RegistroText: {
         color: 'green'
-    }
+    },
 
 
 });

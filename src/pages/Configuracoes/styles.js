@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
 
     },
     RegistroText: {
-        color: 'green'
+        padding: 40,
+        color: 'green',
+
     }
 
 

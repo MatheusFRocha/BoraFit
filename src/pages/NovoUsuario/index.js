@@ -12,9 +12,10 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from './styles';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase'
+import { auth } from '../../config/firebase';
 
-export default function NovoUsuario({ navigation }) {
+
+export default function NovoUsuario({ navigation, user }) {
 
     const [email, setEmail] = useState("")
     const [password, setSenha] = useState("")
@@ -60,7 +61,11 @@ export default function NovoUsuario({ navigation }) {
 
 
     return (
+
+
+
         <KeyboardAvoidingView style={styles.background}>
+            <Header />
             <View style={styles.containerLogo}>
                 <Image style={{ width: 170, height: 80 }}
 

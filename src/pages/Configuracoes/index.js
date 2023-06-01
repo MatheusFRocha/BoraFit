@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from '../../config/firebase';
 import { View, TouchableOpacity, Text } from 'react-native';
 import styles from './styles';
 
 export default function Configuracoes({ navigation }) {
+
+
+
 
     async function Settings() {
         navigation.navigate("Perfil")
@@ -16,6 +18,8 @@ export default function Configuracoes({ navigation }) {
             <TouchableOpacity style={styles.botaoRegistro}
                 onPress={Settings}
             >
+
+
                 <Text style={styles.RegistroText}
 
                 >Perfil</Text>

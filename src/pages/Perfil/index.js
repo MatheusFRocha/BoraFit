@@ -1,37 +1,89 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
+import { SelectList } from 'react-native-dropdown-select-list'
+import { firestore } from '@firebase/firestore';
 import {
-    View,
+
     KeyboardAvoidingView,
-    Image,
+    Input,
     TextInput,
     TouchableOpacity,
     Text,
-    Animated,
+    View,
+
 
 } from 'react-native';
-import { MaterialCommunityIcons } from "@expo/vector-icons"
+
 import styles from './styles';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase'
 
-export default function Perfil({ navigation }) {
-
-    const [email, setEmail] = useState("")
-    const [password, setSenha] = useState("")
-    const [errorLogin, setErrorLogin] = useState("")
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
-    async function createUser() {
-        await createUserWithEmailAndPassword(auth, email, password)
-            .then(value => {
-                navigation.navigate("Login")
-                console.log('cadastrado com sucesso \n' + value.user.uid)
+export default function Perfil() {
+
+    const auth = getAuth();
+    const [nome, setNome] = useState("")
+    const [sobreNome, setSobreNome] = useState('')
+    const [idade, setIdade] = useState("")
+    const [sexo, setSexo] = useState("")
+    const [cidade, setCidade] = useState("")
+
+
+
+
+    const [selected, setSelected] = React.useState("");
+
+
+    const data = [
+        { key: '1', value: '', disabled: true },
+        { key: '2', value: 'Masculino' },
+        { key: '3', value: 'Feminino' },
+        { key: '4', value: 'Outro' }
+
+    ]
+
+    const handleSexo = (event) => {
+
+        setSexo(data.value)
+    }
+
+    function handlePerfil() {
+
+        firestore()
+            .collecetion('perfil')
+            .add({
+                nome: nome,
+                sobre_Nome: sobreNome,
+                idade: idade,
+                cidade: cidade,
+                sexo: sexo,
+                created_at: firestore.fieldValue.serverTimestamp()
             })
-            .catch(error => console.log(error));
+    }
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+
+
+
+
+
+
+        } else {
+            console.log('ninguem logado.')
+        }
     }
 
 
 
+
+
+
+
+
+
+
+    );
 
     return (
         <KeyboardAvoidingView style={styles.background}>
@@ -40,27 +92,84 @@ export default function Perfil({ navigation }) {
 
 
 
-
+            <TextInput style={styles.input}
+                placeholder='Nome'
+                type="text"
+                autoCorrect={false}
+                onChangeText={(text) => setNome(text)}
+                value={nome}
+            />
 
             <TextInput style={styles.input}
-                placeholder='Email'
-                type="email"
+                placeholder='Sobre Nome'
+                type="text"
                 autoCorrect={false}
-                onChangeText={(text) => setEmail(text)}
-                value={email}
+                onChangeText={(text) => setSobreNome(text)}
+                value={sobreNome}
             />
 
 
 
+
+
+
+
+
+
+
             <TextInput style={styles.input}
-                placeholder='Senha'
-                type="password"
+                placeholder='Idade'
+                type="number"
                 secureTextEntry={true}
                 autoCorrect={false}
-                onChangeText={(text) => setSenha(text)}
-                value={password}
+                onChangeText={(text) => setIdade(text)}
+                value={idade}
+
+
 
             />
+            <TextInput style={styles.input}
+                placeholder='Cidade'
+                type="text"
+                secureTextEntry={true}
+                autoCorrect={false}
+                onChangeText={(text) => setCidade(text)}
+                value={cidade}
+
+
+
+            />
+
+            <View style={{
+                marginTop: 10, alignItems: 'flex-start', marginLeft: 'auto',
+                marginRight: 'auto',
+                marginTop: 15,
+
+                padding: 10,
+
+                width: 320,
+
+                borderColor: "green"
+            }}>
+                <SelectList
+                    placeholder='sexo'
+                    setSelected={(val) => setSelected(val)}
+                    data={data}
+                    onSelect={handleSexo}
+                    save="value"
+                />
+
+            </View>
+
+            <TouchableOpacity style={styles.botao}
+                onPress={handlePerfil}
+
+
+            >
+                <Text style={styles.botaoenvio} >Acesso</Text>
+            </TouchableOpacity>
+
+
 
 
 
