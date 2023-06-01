@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { firestore } from '@firebase/firestore';
+
 import {
 
     KeyboardAvoidingView,
