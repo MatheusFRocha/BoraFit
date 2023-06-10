@@ -24,9 +24,11 @@ export default function NovoUsuario({ navigation, user }) {
 
     async function createUser() {
         await createUserWithEmailAndPassword(auth, email, password)
-            .then(value => {
-                navigation.navigate("Login")
-                console.log('cadastrado com sucesso \n' + value.user.uid)
+            .then((userCredential) => {
+                let user = userCredential.user;
+
+                navigation.navigate("Perfil")
+                console.log(user.uid)
             })
             .catch(error => console.log(error));
     }
@@ -65,7 +67,7 @@ export default function NovoUsuario({ navigation, user }) {
 
 
         <KeyboardAvoidingView style={styles.background}>
-            <Header />
+
             <View style={styles.containerLogo}>
                 <Image style={{ width: 170, height: 80 }}
 
