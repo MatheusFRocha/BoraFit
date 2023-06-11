@@ -6,11 +6,12 @@ import Login from './src/pages/Login/';
 import NovoUsuario from './src/pages/NovoUsuario';
 import Home from './src/pages/Home';
 import Perfil from './src/pages/Perfil';
-
+import CriarPerfil from './src/pages/CriarPerfil';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Galeria from './src/pages/Galeria';
+
 
 import Configuracoes from './src/pages/Configuracoes';
 import Mensagens from './src/pages/Mensagens';
@@ -92,6 +93,16 @@ export default function App() {
           }}
           name="NovoUsuario"
           component={NovoUsuario}
+
+        />
+        <Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="CriarPerfil"
+          component={CriarPerfil}
 
         />
         <Stack.Screen

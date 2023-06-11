@@ -32,12 +32,16 @@ export default function Login({ navigation }) {
                 let user = userCredential.user;
 
                 navigation.navigate("Home", { idUser: user.uid })
-                console.log(user.uid)
+
             })
             .catch((error) => {
                 setErrorLogin(true)
                 let errorCode = error.code;
                 let errorMassage = error.message;
+
+                if (errorCode === "auth/wrong-password") {
+                    alert('Email ou senha incorretos')
+                }
             });
     };
     async function sair() {
@@ -151,25 +155,11 @@ export default function Login({ navigation }) {
                     value={password}
 
                 />
-                {errorLogin === true ?
-                    <View style={styles.containerAlert}>
-                        <MaterialCommunityIcons
-                            name='alert-circle'
-                            size={24}
-                            color="#BDBDBD"
 
-                        />
-
-                        <Text style={styles.avisoAlerta}> Email ou senha invalidos</Text>
-                    </View>
-                    :
-                    <View />
-
-                }
 
                 {email === "" || password === "" ?
 
-                    <TouchableOpacity style={styles.botao}
+                    <TouchableOpacity style={styles.botaodisable}
                         disabled={true}
                     >
                         <Text style={styles.botaoenvio} >Acesso</Text>

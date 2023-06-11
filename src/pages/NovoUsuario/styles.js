@@ -47,6 +47,16 @@ const styles = StyleSheet.create({
         marginTop: 50,
 
     },
+    botaodisable: {
+        backgroundColor: 'gray',
+        width: '90%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 45,
+        borderRadius: 7,
+        marginTop: 50,
+
+    },
     botaoenvio: {
         color: '#fff',
         fontSize: 18,

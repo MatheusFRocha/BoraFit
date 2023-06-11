@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import styles from './styles';
 
@@ -16,7 +16,7 @@ export default function Configuracoes({ navigation }) {
         <View style={styles.container}>
 
             <TouchableOpacity style={styles.botaoRegistro}
-                onPress={Settings}
+                onPress={''}
             >
 
 

@@ -17,6 +17,8 @@ import { auth } from '../../config/firebase';
 
 export default function NovoUsuario({ navigation, user }) {
 
+
+
     const [email, setEmail] = useState("")
     const [password, setSenha] = useState("")
     const [errorLogin, setErrorLogin] = useState("")
@@ -26,19 +28,24 @@ export default function NovoUsuario({ navigation, user }) {
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 let user = userCredential.user;
+                navigation.navigate("CriarPerfil")
 
-                navigation.navigate("Perfil")
-                console.log(user.uid)
             })
-            .catch(error => console.log(error));
+            .catch((error) => {
+                setErrorLogin(true)
+                let errorCode = error.code;
+                let errorMassage = error.message;
+                if (errorCode == "auth/email-already-in-use") {
+                    alert('Email ja esta em uso')
+                }
+                else if (errorCode == "auth/invalid-email") {
+                    alert('Email ou senha invalidos')
+                }
+            });
     }
     const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
-
     const [opacity] = useState(new Animated.Value(0));
-
     useEffect(() => {
-
-
         Animated.parallel([
             Animated.spring(offset.y, {
                 toValue: 0,
@@ -50,37 +57,18 @@ export default function NovoUsuario({ navigation, user }) {
                 toValue: 1,
                 duration: 200,
                 useNativeDriver: true,
-
-
-
             })
-
-
         ]).start();
-
     }, [])
-
-
-
     return (
 
-
-
         <KeyboardAvoidingView style={styles.background}>
-
             <View style={styles.containerLogo}>
                 <Image style={{ width: 170, height: 80 }}
-
-
                     source={require('../img/logo.png')}
                 >
-
                 </Image>
-
             </View>
-
-
-
             <Animated.View style={[styles.container,
             {
 
@@ -91,13 +79,7 @@ export default function NovoUsuario({ navigation, user }) {
                     }
                 ]
             }
-
-
-
-
             ]}>
-
-
                 <TextInput style={styles.input}
                     placeholder='Email'
                     type="email"
@@ -105,11 +87,8 @@ export default function NovoUsuario({ navigation, user }) {
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                 />
-
-
-
                 <TextInput style={styles.input}
-                    placeholder='Senha'
+                    placeholder='Senha de 1 a 6 caracteres'
                     type="password"
                     secureTextEntry={true}
                     autoCorrect={false}
@@ -120,71 +99,22 @@ export default function NovoUsuario({ navigation, user }) {
 
 
 
-                {errorLogin === true ?
-                    <View style={styles.containerAlert}>
-                        <MaterialCommunityIcons
-                            name='alert-circle'
-                            size={24}
-                            color="#BDBDBD"
-
-                        />
-
-                        <Text style={styles.avisoAlerta}> Email ou senha invalidos</Text>
-                    </View>
-                    :
-                    <View />
-
-                }
-
                 {email === "" || password === "" ?
-
-                    <TouchableOpacity style={styles.botao}
+                    <TouchableOpacity style={styles.botaodisable}
                         disabled={true}
                     >
                         <Text style={styles.botaoenvio} >Cadastrar</Text>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity style={styles.botao}
-
                         onPress={createUser}
-
-
-
-
-
-
-
-
                     >
                         <Text style={styles.botaoenvio} >Cadastrar</Text>
                     </TouchableOpacity>
 
                 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </Animated.View>
-
-
-
         </KeyboardAvoidingView >
-
-
-
     );
 }
