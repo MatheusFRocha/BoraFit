@@ -6,6 +6,7 @@ import Login from './src/pages/Login/';
 import NovoUsuario from './src/pages/NovoUsuario';
 import Home from './src/pages/Home';
 import Perfil from './src/pages/Perfil';
+import Categorias from './src/pages/Categorias';
 
 
 import { createStackNavigator } from '@react-navigation/stack';
@@ -114,6 +115,17 @@ export default function App() {
           }}
           name="Mensagens"
           component={Mensagens}
+
+        />
+
+        <Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="Esportes"
+          component={Categorias}
 
         />
       </Stack.Navigator>

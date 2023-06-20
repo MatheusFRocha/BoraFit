@@ -65,7 +65,7 @@ export default function NovoUsuario({ navigation, user }) {
 
 
         <KeyboardAvoidingView style={styles.background}>
-            <Header />
+            
             <View style={styles.containerLogo}>
                 <Image style={{ width: 170, height: 80 }}
 

@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Galeria from '../Galeria';
 import Configuracoes from '../Configuracoes';
 import Mensagens from '../Mensagens';
+import Categorias from '../Categorias';
 
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +16,7 @@ export default function MyTabs() {
 
             <Tab.Screen options={{
                 headerTransparent: true, headerShown: false,
-            }} name="Esportes" component={Galeria} />
+            }} name="Esportes" component={Categorias} />
 
             <Tab.Screen options={{
 
