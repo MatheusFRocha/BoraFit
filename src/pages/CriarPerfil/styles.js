@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     containerLogo: {
-        flex: 1,
+        flex: 0.7,
         justifyContent: 'center',
 
     },
@@ -26,14 +26,15 @@ const styles = StyleSheet.create({
 
     },
     input: {
-        backgroundColor: '#E1E1E1',
-        width: '90%',
-        marginBottom: 15,
-        color: '#222',
-        fontSize: 17,
-        borderRadius: 7,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 15,
+        height: 50,
         padding: 10,
-
+        height: 50,
+        width: 300,
+        borderBottomWidth: 1,
+        borderBottomColor: "green"
 
     },
     botao: {
@@ -43,23 +44,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 45,
         borderRadius: 7,
-
-
-    },
-    botaodisable: {
-        backgroundColor: 'gray',
-        width: '90%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 45,
-        borderRadius: 7,
-
+        marginTop: 50,
 
     },
     botaoenvio: {
         color: '#fff',
         fontSize: 18,
-
 
     },
     botaoRegistro: {
@@ -69,7 +59,10 @@ const styles = StyleSheet.create({
     },
     RegistroText: {
         color: 'green'
-    }
+    }, RegistroTexttitle: {
+        marginBottom: 70,
+        color: 'green'
+    },
 
 
 });
