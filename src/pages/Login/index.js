@@ -183,6 +183,15 @@ export default function Login({ navigation }) {
                     >Crie uma conta agora</Text>
 
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.botaoRegistro}
+                    onPress={''}
+                >
+                    <Text style={styles.RegistroText}
+
+
+                    >Esqueci minha senha</Text>
+
+                </TouchableOpacity>
 
 
 

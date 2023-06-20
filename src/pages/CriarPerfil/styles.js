@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
     },
     RegistroText: {
         color: 'green'
+    }, RegistroTexttitle: {
+        marginBottom: 70,
+        color: 'green'
     },
 
 

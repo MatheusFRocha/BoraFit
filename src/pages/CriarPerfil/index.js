@@ -8,6 +8,7 @@ import {
     TextInput,
     TouchableOpacity,
     Text,
+    View
 } from 'react-native';
 
 
@@ -66,7 +67,14 @@ export default function CriarPerfil({ navigation }) {
         <KeyboardAvoidingView style={styles.background}>
 
 
+            <View>
+                <Text style={styles.RegistroTexttitle}>
 
+                    Crie seu perfil
+
+
+                </Text>
+            </View>
 
 
             <TextInput style={styles.input}
