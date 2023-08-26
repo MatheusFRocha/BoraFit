@@ -1,16 +1,22 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Alert } from 'react-native';
 import styles from './styles';
+import { getAuth } from "firebase/auth";
+
 
 export default function Configuracoes({ navigation }) {
 
-
-
-
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+   
+    
+   
     async function Settings() {
         navigation.navigate("Perfil")
 
     };
+
+    alert(userId)
 
     return (
         <View style={styles.container}>
@@ -24,7 +30,7 @@ export default function Configuracoes({ navigation }) {
 
                 >Perfil</Text>
 
-            </TouchableOpacity>
+            </TouchableOpacity>  
 
         </View>
     );

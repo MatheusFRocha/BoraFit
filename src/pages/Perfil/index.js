@@ -21,7 +21,7 @@ export default function Perfil({ navigation }) {
     const [cidade, setCidade] = useState("")
     const [idade, setIdade] = useState('')
     const [a, setUser] = useState('')
-    const usuarios = collection(db, '/usuarios/' + + 'Perfil');
+    const usuarios = collection(db, '/usuarios/' );
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -39,7 +39,7 @@ export default function Perfil({ navigation }) {
             alert('Por favor verifique os campos')
         } else {
             addDoc(
-                collection(db, 'usuarios'), { nome: nome, sobreNome: sobreNome, idade: idade, cidade: cidade }
+                FileField(db, 'usuarios'), { nome: nome, sobreNome: sobreNome, idade: idade, cidade: cidade }
             ).then(
                 alert('Alterado com sucesso'),
                 navigation.navigate("Home")

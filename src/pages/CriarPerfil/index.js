@@ -23,7 +23,8 @@ export default function CriarPerfil({ navigation }) {
     const [idade, setIdade] = useState('')
     const [a, setUser] = useState('')
     const [errorLogin, setErrorLogin] = useState("")
-
+   
+    
 
 
     const handleverificacampos = () => {
@@ -31,7 +32,7 @@ export default function CriarPerfil({ navigation }) {
             alert('Por favor verifique os campos')
         } else {
             addDoc(
-                collection(db, 'usuarios/' + a + '/Perfil'), { nome: nome, sobreNome: sobreNome, idade: idade, cidade: cidade }
+                collection(db, 'usuarios/'), { nome: nome, sobreNome: sobreNome, idade: idade, cidade: cidade }
             ).then(
                 alert('Alterado com sucesso'),
                 navigation.navigate("Home")
