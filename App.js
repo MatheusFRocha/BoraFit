@@ -15,6 +15,8 @@ import Galeria from './src/pages/Galeria';
 
 import Configuracoes from './src/pages/Configuracoes';
 import Mensagens from './src/pages/Mensagens';
+import CriarPerfil from './src/pages/CriarPerfil';
+import Categorias from './src/pages/Categorias';
 
 
 

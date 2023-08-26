@@ -63,10 +63,6 @@ export default function NovoUsuario({ navigation, user }) {
     return (
 
         <KeyboardAvoidingView style={styles.background}>
-<<<<<<< HEAD
-            
-=======
->>>>>>> 8196591b594f934ae195b281374035ac035ccf92
             <View style={styles.containerLogo}>
                 <Image style={{ width: 170, height: 80 }}
                     source={require('../img/logo.png')}
