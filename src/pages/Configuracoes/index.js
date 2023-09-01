@@ -22,7 +22,7 @@ export default function Configuracoes({ navigation }) {
         <View style={styles.container}>
 
             <TouchableOpacity style={styles.botaoRegistro}
-                onPress={''}
+                onPress={Settings}
             >
 
 

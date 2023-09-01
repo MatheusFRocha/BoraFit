@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { collection, doc, setDoc, addDoc } from "firebase/firestore";
+import { DocumentReference, collection, doc, get} from "firebase/firestore";
 import { db } from '../../config/firebase';
 
 import {
@@ -16,12 +16,16 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Perfil({ navigation }) {
     const auth = getAuth();
+    const [list, setList] = useState([])
     const [nome, setNome] = useState("")
     const [sobreNome, setSobreNome] = useState('')
     const [cidade, setCidade] = useState("")
     const [idade, setIdade] = useState('')
     const [a, setUser] = useState('')
     const usuarios = collection(db, '/usuarios/' );
+
+
+   
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -33,29 +37,42 @@ export default function Perfil({ navigation }) {
     }
     );
 
+    
+   
+        
+         async function item(info) {
 
-    const handleverificacampos = () => {
-        if (nome === "" || sobreNome === "" || idade === "" || cidade === "") {
-            alert('Por favor verifique os campos')
-        } else {
-            addDoc(
-                FileField(db, 'usuarios'), { nome: nome, sobreNome: sobreNome, idade: idade, cidade: cidade }
-            ).then(
-                alert('Alterado com sucesso'),
-                navigation.navigate("Home")
-            ).catch(error => console.log(error))
-        }
-    }
-    const handleidade = () => {
-        if (isNaN(idade)) {
-            alert('Digite um idade correta, por favor')
-        } else {
-            handleverificacampos()
-        }
-    }
+            const listaitem = await info.map(
+                (l) => {l} 
+                )
+                
+            console.log(listaitem)
+          }
+        
 
+
+      const handleinfo = () => {
+
+       const info = doc(db, "Perfil/"+ a)
+        
+         item(info)
+        
+      }
 
     return (
+
+        <TouchableOpacity style={styles.botao}
+        onPress={handleinfo}
+
+
+    >
+       
+
+        <Text style={styles.botaoenvio} >Pronto</Text>
+    </TouchableOpacity>
+
+
+        /*
         <KeyboardAvoidingView style={styles.background}>
             <TextInput style={styles.input}
                 placeholder='Nome'
@@ -94,5 +111,8 @@ export default function Perfil({ navigation }) {
                 <Text style={styles.botaoenvio} >Pronto</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView >
+        */
+
+
     );
 }

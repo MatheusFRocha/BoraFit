@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc,doc } from "firebase/firestore";
 import { db } from '../../config/firebase';
 import styles from './styles';
 import {
@@ -24,18 +24,40 @@ export default function CriarPerfil({ navigation }) {
     const [a, setUser] = useState('')
     const [errorLogin, setErrorLogin] = useState("")
    
+      
+
+
     
+    
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+            setUser(user.uid)
+        } else {
+            console.log('ninguem logado.')
+        }
+    }
+    );
 
+   
 
-    const handleverificacampos = () => {
+    const handleverificacampos = async () => {
         if (nome === "" || sobreNome === "" || idade === "" || cidade === "") {
             alert('Por favor verifique os campos')
         } else {
-            addDoc(
-                collection(db, 'usuarios/'), { nome: nome, sobreNome: sobreNome, idade: idade, cidade: cidade }
-            ).then(
+            
+           const docRef = doc(db, "Perfil", a);
+            const envia = {nome: nome,
+                
+                sobreNome: sobreNome,
+                 idade: idade, 
+                 cidade: cidade };
+            await setDoc(docRef, envia)
+
+            .then(
                 alert('Alterado com sucesso'),
-                navigation.navigate("Home")
+                console.log(a),
+               
             ).catch((error) => {
                 setErrorLogin(true)
                 let errorCode = error.code;
