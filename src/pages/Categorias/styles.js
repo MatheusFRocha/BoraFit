@@ -25,6 +25,18 @@ const styles = StyleSheet.create ({
         marginTop:20,
         flexDirection:'row'
     },
+    imgSports:{
+        width: 350,
+        height:150,
+        borderRadius: 15,
+
+    },
+    containerImg:{
+        paddingHorizontal:'15%',
+        paddingVertical:5,
+        alignItems:'center',
+        justifyContent: 'center'
+    },
     container:{
 
         flex:1

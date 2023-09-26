@@ -12,11 +12,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Galeria from './src/pages/Galeria';
 
-
+import Lobby from './src/pages/Lobby';
 import Configuracoes from './src/pages/Configuracoes';
 import Mensagens from './src/pages/Mensagens';
 import CriarPerfil from './src/pages/CriarPerfil';
 import Categorias from './src/pages/Categorias';
+import CriarSala from './src/pages/CriarSala'
 
 
 
@@ -65,6 +66,18 @@ export default function App() {
           component={Configuracoes}
 
         />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="CriarSala"
+          component={CriarSala}
+
+        />
+
         <Stack.Screen
           options={{
             title: '',
@@ -138,6 +151,17 @@ export default function App() {
           }}
           name="Esportes"
           component={Categorias}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="Lobby"
+          component={Lobby}
 
         />
       </Stack.Navigator>
