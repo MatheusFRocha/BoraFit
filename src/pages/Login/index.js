@@ -16,8 +16,8 @@ import { auth } from '../../config/firebase';
 
 
 export default function Login({ navigation }) {
-    const [email, setEmail] = useState("")
-    const [password, setSenha] = useState("")
+    const [email, setEmail] = useState('teste@teste.com')
+    const [password, setSenha] = useState("123123")
     const [errorLogin, setErrorLogin] = useState("")
 
     async function createUser() {

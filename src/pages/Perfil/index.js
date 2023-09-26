@@ -1,8 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import { SelectList } from 'react-native-dropdown-select-list'
-import { DocumentReference, collection, doc, get} from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
 import { db } from '../../config/firebase';
-
+import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
 import {
     KeyboardAvoidingView,
     Input,
@@ -12,107 +10,161 @@ import {
     View,
 } from 'react-native';
 import styles from './styles';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+
+
 
 export default function Perfil({ navigation }) {
-    const auth = getAuth();
-    const [list, setList] = useState([])
-    const [nome, setNome] = useState("")
-    const [sobreNome, setSobreNome] = useState('')
-    const [cidade, setCidade] = useState("")
-    const [idade, setIdade] = useState('')
-    const [a, setUser] = useState('')
-    const usuarios = collection(db, '/usuarios/' );
 
+        const [data, setData] = useState([]);
 
-   
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            setUser(user.uid)
-        } else {
-            console.log('ninguem logado.')
-        }
-    }
-    );
-
-    
-   
+        const auth = getAuth();
+        const a = auth.currentUser.uid;
+       
+        const [nome, setNome] = useState("")
+        const [sobreNome, setSobreNome] = useState('')
+        const [cidade, setCidade] = useState("")
+        const [idade, setIdade] = useState('')
         
-         async function item(info) {
+        const [errorLogin, setErrorLogin] = useState("")
+            
+  
 
-            const listaitem = await info.map(
-                (l) => {l} 
-                )
+        
+
+       
+            async function info() {
+
                 
-            console.log(listaitem)
-          }
+                
+                const q = query(collection(db, "Perfil"), where("Id", "==", a));
+
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                  // doc.data() is never undefined for query doc snapshots
+                  const dados = (doc.id, " => ", doc.data());
+
+                    setNome(dados.nome)
+                    setSobreNome(dados.sobreNome)
+                    setCidade(dados.Cidade)
+                    setIdade(dados.Idade)
+
+
+                console.log(dados)
+
+
+                });
+
+            }
+              
+            useEffect(() => {
+
+            
+               info()
+            
+            },[])
+
+            
+             
+            const handleverificacampos = async () => {
+                if (nome === "" || sobreNome === "" || idade === "" || cidade === "") {
+                    alert('Por favor verifique os campos')
+                } else {
+                    
+                   const docRef = doc(db, "Perfil", a);
+                    const envia = {nome: nome,
+                        Id:a,
+                        sobreNome: sobreNome,
+                         Idade: idade, 
+                         Cidade: cidade };
+                     setDoc(docRef, envia)
         
+                    .then(
+                        alert('Alterado com sucesso'),
+                        console.log(a),
+                       
+                    ).catch((error) => {
+                        setErrorLogin(true)
+                        let errorCode = error.code;
+                        let errorMassage = error.message;
+                    })
+                }
+            }
 
-
-      const handleinfo = () => {
-
-       const info = doc(db, "Perfil/"+ a)
-        
-         item(info)
-        
-      }
-
+            const handleidade = () => {
+                if (isNaN(idade)) {
+                    alert('Digite um idade correta, por favor')
+                } else {
+                    handleverificacampos()
+                }
+            }
+    
     return (
 
-        <TouchableOpacity style={styles.botao}
-        onPress={handleinfo}
-
-
-    >
-       
-
-        <Text style={styles.botaoenvio} >Pronto</Text>
-    </TouchableOpacity>
-
-
-        /*
         <KeyboardAvoidingView style={styles.background}>
-            <TextInput style={styles.input}
-                placeholder='Nome'
-                type="text"
-                autoCorrect={false}
-                onChangeText={(text) => setNome(text)}
-                value={nome}
-            />
-            <TextInput style={styles.input}
-                placeholder='Sobre Nome'
-                type="text"
-                autoCorrect={false}
-                onChangeText={(text) => setSobreNome(text)}
-                value={sobreNome}
-            />
-            <TextInput style={styles.input}
 
-                placeholder='Idade'
-                type="number"
-                secureTextEntry={true}
-                autoCorrect={false}
-                onChangeText={(idade) => setIdade(idade)}
-                value={idade}
-            />
-            <TextInput style={styles.input}
-                placeholder='Cidade'
-                type="text"
-                secureTextEntry={true}
-                autoCorrect={false}
-                onChangeText={(text) => setCidade(text)}
-                value={cidade}
-            />
-            <TouchableOpacity style={styles.botao}
-                onPress={handleidade}
-            >
-                <Text style={styles.botaoenvio} >Pronto</Text>
-            </TouchableOpacity>
-        </KeyboardAvoidingView >
-        */
 
+        <View>
+            <Text style={styles.RegistroTexttitle}>
+
+                Perfil
+
+
+            </Text>
+        </View>
+
+
+        <TextInput style={styles.input}
+            placeholder='Nome'
+            type="text"
+            autoCorrect={false}
+            onChangeText={(text) => setNome(text)}
+            value={nome}
+        />
+
+        <TextInput style={styles.input}
+            placeholder='Sobre Nome'
+            type="text"
+            autoCorrect={false}
+            onChangeText={(text) => setSobreNome(text)}
+            value={sobreNome}
+        />
+
+
+        <TextInput style={styles.input}
+
+            placeholder='Idade'
+            type="number"
+           
+            autoCorrect={false}
+            onChangeText={(idade) => setIdade(idade)}
+            value={idade}
+
+        />
+        <TextInput style={styles.input}
+            placeholder='Cidade'
+            type="text"
+            
+            autoCorrect={false}
+            onChangeText={(text) => setCidade(text)}
+            value={cidade}
+
+
+
+        />
+
+        <TouchableOpacity style={styles.botao}
+            onPress={handleidade}
+
+
+        >
+            <Text style={styles.botaoenvio} >Pronto</Text>
+        </TouchableOpacity>
+
+    </KeyboardAvoidingView >
+
+
+    
 
     );
 }

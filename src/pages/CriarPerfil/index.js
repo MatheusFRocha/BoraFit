@@ -48,14 +48,15 @@ export default function CriarPerfil({ navigation }) {
             
            const docRef = doc(db, "Perfil", a);
             const envia = {nome: nome,
-                
+                Id:a,
                 sobreNome: sobreNome,
-                 idade: idade, 
-                 cidade: cidade };
-            await setDoc(docRef, envia)
+                 Idade: idade, 
+                 Cidade: cidade };
+             setDoc(docRef, envia)
 
             .then(
-                alert('Alterado com sucesso'),
+                navigation.navigate("Home"),
+                alert('Cadastrado com sucesso, tenha uma boa experiência!!!'),
                 console.log(a),
                
             ).catch((error) => {
