@@ -17,7 +17,7 @@ import Configuracoes from './src/pages/Configuracoes';
 import Mensagens from './src/pages/Mensagens';
 import CriarPerfil from './src/pages/CriarPerfil';
 import Categorias from './src/pages/Categorias';
-
+import Ressenha from './src/pages/Resenha';
 
 
 const Stack = createStackNavigator();
@@ -140,6 +140,16 @@ export default function App() {
           component={Categorias}
 
         />
+
+        <Stack.Screen
+                  options={{
+                    title: '',
+                    headerTransparent: true,
+                    headerShown: false,
+                  }}
+                  name="Resenha"
+                  component={Ressenha}
+         />
       </Stack.Navigator>
     </NavigationContainer >
   );

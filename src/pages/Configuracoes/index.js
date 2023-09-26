@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text, Alert } from 'react-native';
 import styles from './styles';
 import { getAuth } from "firebase/auth";
-import {info} from '../utils/info';
+
 
 
 export default function Configuracoes({ navigation }) {
@@ -15,7 +15,7 @@ export default function Configuracoes({ navigation }) {
     
    
     async function Settings() {
-        navigation.navigate("Perfil", info )
+        navigation.navigate("Perfil" )
 
     };
 

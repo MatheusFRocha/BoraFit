@@ -45,6 +45,9 @@ export default function Login({ navigation }) {
                 else if(errorCode === "auth/user-not-found" ){
                     alert("Usuário ou senha incorreto")
                 }
+                else if(errorCode == "auth/user-disabled"){
+                    alert('Usuário desabilitado')
+                }
             });
     };
     async function sair() {
@@ -70,7 +73,9 @@ export default function Login({ navigation }) {
 
 
 
-
+    const recover = () => {
+        navigation.navigate('Resenha')
+    }
 
 
     const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
@@ -187,7 +192,7 @@ export default function Login({ navigation }) {
 
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.botaoRegistro}
-                    onPress={''}
+                    onPress={recover}
                 >
                     <Text style={styles.RegistroText}
 
