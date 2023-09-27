@@ -19,7 +19,7 @@ export default function Configuracoes({ navigation }) {
 
     };
 
-    alert(userId)
+  
 
     return (
         <View style={styles.container}>

@@ -17,12 +17,12 @@ import Configuracoes from './src/pages/Configuracoes';
 import Mensagens from './src/pages/Mensagens';
 import CriarPerfil from './src/pages/CriarPerfil';
 import Categorias from './src/pages/Categorias';
-<<<<<<< HEAD
+
 import Ressenha from './src/pages/Resenha';
-=======
+
 import CriarSala from './src/pages/CriarSala'
 
->>>>>>> bdcdf92c3f12b28491d46833e7e9ee3319d1e212
+
 
 
 const Stack = createStackNavigator();
@@ -158,7 +158,7 @@ export default function App() {
 
         />
 
-<<<<<<< HEAD
+
         <Stack.Screen
                   options={{
                     title: '',
@@ -168,7 +168,7 @@ export default function App() {
                   name="Resenha"
                   component={Ressenha}
          />
-=======
+
 <Stack.Screen
           options={{
             title: '',
@@ -179,7 +179,7 @@ export default function App() {
           component={Lobby}
 
         />
->>>>>>> bdcdf92c3f12b28491d46833e7e9ee3319d1e212
+
       </Stack.Navigator>
     </NavigationContainer >
   );

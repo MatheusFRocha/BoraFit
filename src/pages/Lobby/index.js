@@ -2,16 +2,19 @@ import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import styles from './styles';
 
- 
+    
 
 
-    export default function Lobby({navigation}) {
+    export default function Lobby({navigation , route}) {
         
         async function CriarSala() {
+
             navigation.navigate("CriarSala")
     
         };
+        const { id, esporte } = route.params;
 
+        console.log(id, esporte )
     return (
         
      <View>
