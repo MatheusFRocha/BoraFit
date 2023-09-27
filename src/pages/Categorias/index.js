@@ -2,9 +2,14 @@ import react from 'react';
 import { Image, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles.js';
 import { SafeAreaView} from 'react-native-safe-area-context';
-import Sports from '../Components/Sports';
 
-export default function Categorias(){
+export default function Categorias({navigation}){
+
+
+    async function Lobby() {
+        navigation.navigate("Lobby")
+
+    };
 
     return(
 
@@ -15,9 +20,23 @@ export default function Categorias(){
             </View>
 
             <ScrollView>
-            <View style={{flexDirection: 'column', justifyContent:'space-around'}}>
-                <Sports/>
-            </View>
+            <TouchableOpacity onPress={Lobby} style={styles.containerImg}>
+            <Image
+              style={styles.imgSports}
+              source={require('../img/correr.jpg')} />
+            </TouchableOpacity>
+      
+            <TouchableOpacity onPress={Lobby} style={styles.containerImg}>
+            <Image
+              style={styles.imgSports}
+              source={require('../img/fut.jpg')} />
+            </TouchableOpacity>
+      
+            <TouchableOpacity onPress={Lobby} style={styles.containerImg}>
+            <Image
+              style={styles.imgSports}
+              source={require('../img/muscle.jpg')} />
+            </TouchableOpacity>
             </ScrollView>
 
         </SafeAreaView>

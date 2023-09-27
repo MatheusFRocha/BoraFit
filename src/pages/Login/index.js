@@ -16,8 +16,13 @@ import { auth } from '../../config/firebase';
 
 
 export default function Login({ navigation }) {
+<<<<<<< HEAD
     const [email, setEmail] = useState('teste@teste.com')
     const [password, setSenha] = useState("123123")
+=======
+    const [email, setEmail] = useState("jojo@jojo.com")
+    const [password, setSenha] = useState("123456")
+>>>>>>> bdcdf92c3f12b28491d46833e7e9ee3319d1e212
     const [errorLogin, setErrorLogin] = useState("")
 
     async function createUser() {
