@@ -5,6 +5,7 @@ import { SafeAreaView} from 'react-native-safe-area-context';
 
 export default function Categorias({navigation}){
 
+  
 
     async function Lobby() {
         navigation.navigate("Lobby")

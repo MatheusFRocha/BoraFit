@@ -14,11 +14,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         width: '50%',
-        marginTop: '50%',
+    
         marginLeft: '25%',
         paddingBottom: 10,
-
-
 
     },
     input: {
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
     },
     containerLogo: {
         alignItems: 'center',
-        flex: 0.7,
+        marginTop:0,
         justifyContent: 'center',
 
     },
