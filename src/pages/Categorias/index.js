@@ -8,8 +8,10 @@ import { useState } from 'react';
 
 export default function Categorias({navigation}){
 
+
     const [url, setUrl] = useState ('')
     
+
 
     return(
 
