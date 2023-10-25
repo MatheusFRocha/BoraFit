@@ -17,8 +17,8 @@ import { auth } from '../../config/firebase';
 
 export default function Login({ navigation }) {
 
-    const [email, setEmail] = useState('teste@teste.com')
-    const [password, setSenha] = useState("123123")
+    const [email, setEmail] = useState('')
+    const [password, setSenha] = useState("")
 
     
 
@@ -37,7 +37,7 @@ export default function Login({ navigation }) {
 
             })
             .catch((error) => {
-                setErrorLogin(true)
+                
                 let errorCode = error.code;
                 let errorMassage = error.message;
               

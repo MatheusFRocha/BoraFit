@@ -26,42 +26,59 @@ export default function Perfil({ navigation }) {
         const [cidade, setCidade] = useState("")
         const [idade, setIdade] = useState('')
         
-        const [errorLogin, setErrorLogin] = useState("")
+     
             
   
+       
+           
 
-        
 
        
             async function info() {
 
                 
-                
+              
                 const q = query(collection(db, "Perfil"), where("Id", "==", a));
 
+
                 const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                  // doc.data() is never undefined for query doc snapshots
-                  const dados = (doc.id, " => ", doc.data());
 
-                    setNome(dados.nome)
-                    setSobreNome(dados.sobreNome)
-                    setCidade(dados.Cidade)
-                    setIdade(dados.Idade)
+                
+                
 
-
-                console.log(dados)
-
-
-                });
-
+                try{
+                    querySnapshot.forEach((doc) => {
+                  
+                        const dados = (doc.id, " => ", doc.data());
+      
+                          setNome(dados.nome)
+                          setSobreNome(dados.sobreNome)
+                          setCidade(dados.Cidade)
+                          setIdade(dados.Idade)
+                       
+                        
+                        
+                          
+                      } 
+                      
+                      )  ;
+                      
+      
+                      
+                      
+                } catch{
+                   alert('error')
+                }
+                
+                
             }
               
             useEffect(() => {
 
-            
+             
                info()
-            
+               
+                
             },[])
 
             
