@@ -32,7 +32,7 @@ import styles from './styles';
             </TouchableOpacity>
         </View>
         
-        </View>
+    </View>
 
         
     );

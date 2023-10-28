@@ -129,8 +129,12 @@ export default function CriarPerfil({ navigation }) {
             <TextInput style={styles.input}
 
                 placeholder='Idade'
+<<<<<<< HEAD
                 type="number"
                 
+=======
+                keyboardType='numeric'
+>>>>>>> 3ea47fb71d0e482918b79576b342ac743b5aeff9
                 autoCorrect={false}
                 onChangeText={(idade) => setIdade(idade)}
                 value={idade}
@@ -141,7 +145,10 @@ export default function CriarPerfil({ navigation }) {
             <TextInput style={styles.input}
                 placeholder='Cidade'
                 type="text"
+<<<<<<< HEAD
                 
+=======
+>>>>>>> 3ea47fb71d0e482918b79576b342ac743b5aeff9
                 autoCorrect={false}
                 onChangeText={(text) => setCidade(text)}
                 value={cidade}
