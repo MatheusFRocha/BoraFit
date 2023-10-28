@@ -1,9 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import {View, Text, SafeAreaView, TextInput, Button} from 'react-native'; 
+import {View, Text, SafeAreaView, TextInput, Icon} from 'react-native'; 
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import styles from './styles';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
 
 
 export default function CriarSalaCorrida() {
@@ -22,7 +25,7 @@ export default function CriarSalaCorrida() {
       value: date,
       onChange,
       mode: currentMode,
-      is24Hour: true,
+      is24Hour: true
     });
   };
 
@@ -55,14 +58,16 @@ export default function CriarSalaCorrida() {
             <SafeAreaView style={styles.background}>
                 <View>
                     <Text style={styles.title}>Crie sua sala:</Text>
-                    <TextInput 
-                    style={styles.input}
-                    multiline = {true}
-                    numberOfLines = {4}
-                    onChangeText={setDescricao}
-                    value={descricao}
-                    placeholder="Descrição da Atividade"
-                    />
+                    <View style={styles.inputArea}>
+                      <TextInput 
+                      style={styles.textArea}
+                      multiline = {true}
+                      numberOfLines = {5}
+                      onChangeText={setDescricao}
+                      value={descricao}
+                      placeholder="Descrição da atividade"
+                      />
+                    </View>
                     <TextInput style={styles.input}
                     onChangeText={setMembros}
                     value={membros}
@@ -71,14 +76,17 @@ export default function CriarSalaCorrida() {
                     maxLength={2}
                     />
                 </View>
-                    <TouchableOpacity style={styles.botao} onPress={showDatepicker}>
-                        <Text style={styles.botaoBuscarCriar}>Data</Text>
+                    <TouchableOpacity style={styles.botao} >
+                        <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="run" color={"white"} size={20} />Percurso</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.botao} onPress={showDatepicker} >
+                        <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="calendar" color={"white"} size={20} />Data</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.botao} onPress={showTimepicker}>
-                        <Text style={styles.botaoBuscarCriar}>Hora</Text>
+                        <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="clock" color={"white"} size={20} />Hora</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.botao} onPress={showTimepicker}>
-                        <Text style={styles.botaoBuscarCriar}>Criar</Text>
+                    <TouchableOpacity style={styles.botao}>
+                        <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="check" color={"white"} size={20} />Criar</Text>
                     </TouchableOpacity>
             </SafeAreaView>
             

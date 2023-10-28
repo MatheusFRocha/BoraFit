@@ -128,8 +128,7 @@ export default function CriarPerfil({ navigation }) {
             <TextInput style={styles.input}
 
                 placeholder='Idade'
-                type="number"
-                secureTextEntry={true}
+                keyboardType='numeric'
                 autoCorrect={false}
                 onChangeText={(idade) => setIdade(idade)}
                 value={idade}
@@ -140,7 +139,6 @@ export default function CriarPerfil({ navigation }) {
             <TextInput style={styles.input}
                 placeholder='Cidade'
                 type="text"
-                secureTextEntry={true}
                 autoCorrect={false}
                 onChangeText={(text) => setCidade(text)}
                 value={cidade}

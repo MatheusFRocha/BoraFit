@@ -24,8 +24,20 @@ const styles = StyleSheet.create({
         marginLeft: '25%',
         paddingBottom: 10,
     },
+
+    inputArea: {
+        borderStyle: "solid",
+        borderColor: 'green',
+        borderWidth: 2,
+        marginRight: 10,
+        marginLeft: 10,
+        borderRadius: 20
+
+    },
+
     input: {
         marginLeft: 'auto',
+        padding: 10,
         marginRight: 'auto',
         marginTop: 5,
         height: 50,
@@ -68,6 +80,15 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 18,
 
+    },
+    textArea: {
+        textAlignVertical: 'top',
+        height: 200,
+        paddingLeft: 10,
+        paddingTop: 5
+    },
+    dateText: {
+        color: '#fff'
     }
 
 
