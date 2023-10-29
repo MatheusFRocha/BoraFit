@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc, setDoc,doc } from "firebase/firestore";
 import { db } from '../../config/firebase';
@@ -8,9 +8,14 @@ import {
     TextInput,
     TouchableOpacity,
     Text,
-    View
+    View,
+    Plataform,
+    Button,
+    Image,
+    SafeAreaView,
 } from 'react-native';
 
+import * as ImagePicker from 'expo-image-picker';
 
 
 
@@ -23,10 +28,24 @@ export default function CriarPerfil({ navigation }) {
     const [idade, setIdade] = useState('')
     const [a, setUser] = useState('')
     const [errorLogin, setErrorLogin] = useState("")
+    const [status, requestPermission] = ImagePicker.useCameraPermissions();
+    const [image, setImage] = useState(null);
    
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.canceled) {
+          setImage(result.assets[0].uri);
+        }}
       
-
-
     
     
     onAuthStateChanged(auth, (user) => {
@@ -39,6 +58,7 @@ export default function CriarPerfil({ navigation }) {
     }
     );
 
+    
    
 
     const handleverificacampos = async () => {
@@ -51,7 +71,8 @@ export default function CriarPerfil({ navigation }) {
                 Id:a,
                 sobreNome: sobreNome,
                  Idade: idade, 
-                 Cidade: cidade };
+                 Cidade: cidade,
+                 Image: image };
              setDoc(docRef, envia)
 
             .then(
@@ -84,6 +105,11 @@ export default function CriarPerfil({ navigation }) {
 
         }
     }
+
+  
+   
+
+
     );
 
     return (
@@ -100,6 +126,30 @@ export default function CriarPerfil({ navigation }) {
                 </Text>
             </View>
 
+             
+            <SafeAreaView style={{heigth:100, width:100}}>
+                
+               <View style={{height:400, width:100}}>
+
+               </View>
+
+               <TouchableOpacity onPress={pickImage}
+               style={{
+                width:'60%',
+                backgroundColor:'skyblue',
+                borderRadius:20,
+                justifyContent:'center',
+                alignItems:'center',
+                alignSelf:'center'
+               }}
+               >
+                <Text style={{fontSize:20}}>Foto</Text>
+               </TouchableOpacity>
+                    
+             
+            </SafeAreaView>
+            
+           
 
             <TextInput style={styles.input}
                 placeholder='Nome'
@@ -129,12 +179,9 @@ export default function CriarPerfil({ navigation }) {
             <TextInput style={styles.input}
 
                 placeholder='Idade'
-<<<<<<< HEAD
+
                 type="number"
                 
-=======
-                keyboardType='numeric'
->>>>>>> 3ea47fb71d0e482918b79576b342ac743b5aeff9
                 autoCorrect={false}
                 onChangeText={(idade) => setIdade(idade)}
                 value={idade}
@@ -145,10 +192,7 @@ export default function CriarPerfil({ navigation }) {
             <TextInput style={styles.input}
                 placeholder='Cidade'
                 type="text"
-<<<<<<< HEAD
                 
-=======
->>>>>>> 3ea47fb71d0e482918b79576b342ac743b5aeff9
                 autoCorrect={false}
                 onChangeText={(text) => setCidade(text)}
                 value={cidade}

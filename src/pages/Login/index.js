@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     Text,
     Animated,
+    
 
 } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -15,10 +16,11 @@ import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase';
 
 
+
 export default function Login({ navigation }) {
 
-    const [email, setEmail] = useState('')
-    const [password, setSenha] = useState("")
+    const [email, setEmail] = useState('j@gmail.com')
+    const [password, setSenha] = useState("123123")
 
     
 

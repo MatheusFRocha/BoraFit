@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Text,
     View,
+    Image
 } from 'react-native';
 import styles from './styles';
 import { getAuth } from "firebase/auth";
@@ -25,7 +26,7 @@ export default function Perfil({ navigation }) {
         const [sobreNome, setSobreNome] = useState('')
         const [cidade, setCidade] = useState("")
         const [idade, setIdade] = useState('')
-        
+        const [image, setImage] = useState('')
      
             
   
@@ -50,13 +51,13 @@ export default function Perfil({ navigation }) {
                     querySnapshot.forEach((doc) => {
                   
                         const dados = (doc.id, " => ", doc.data());
-      
+                          setImage(dados.Image)
                           setNome(dados.nome)
                           setSobreNome(dados.sobreNome)
                           setCidade(dados.Cidade)
                           setIdade(dados.Idade)
                        
-                        
+                        console.log(dados.Image)
                         
                           
                       } 
@@ -93,7 +94,8 @@ export default function Perfil({ navigation }) {
                         Id:a,
                         sobreNome: sobreNome,
                          Idade: idade, 
-                         Cidade: cidade };
+                         Cidade: cidade,
+                        };
                      setDoc(docRef, envia)
         
                     .then(
@@ -129,8 +131,18 @@ export default function Perfil({ navigation }) {
 
             </Text>
         </View>
-
-
+       
+        {image && <Image  source={{uri:image}} style={{   width: 88,
+            height:200,
+            width:200,
+            borderRadius: 100,
+            
+            
+            
+            }}/> }
+     
+        
+        
         <TextInput style={styles.input}
             placeholder='Nome'
             type="text"
