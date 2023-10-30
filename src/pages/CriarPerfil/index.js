@@ -14,7 +14,7 @@ import {
     Image,
     SafeAreaView,
 } from 'react-native';
-
+import Placeholder from '../../../assets/Placeholder.jpg'
 import * as ImagePicker from 'expo-image-picker';
 
 
@@ -28,25 +28,29 @@ export default function CriarPerfil({ navigation }) {
     const [idade, setIdade] = useState('')
     const [a, setUser] = useState('')
     const [errorLogin, setErrorLogin] = useState("")
-    const [status, requestPermission] = ImagePicker.useCameraPermissions();
+   
+    const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
     const [image, setImage] = useState(null);
+
    
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
+        
           mediaTypes: ImagePicker.MediaTypeOptions.All,
           allowsEditing: true,
           aspect: [4, 3],
           quality: 1,
         });
     
-        console.log(result);
-    
+        
         if (!result.canceled) {
           setImage(result.assets[0].uri);
+          {}
+          
         }}
       
-    
+   
     
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -129,25 +133,35 @@ export default function CriarPerfil({ navigation }) {
              
             <SafeAreaView style={{heigth:100, width:100}}>
                 
-               <View style={{height:400, width:100}}>
+              
 
-               </View>
+               
+
 
                <TouchableOpacity onPress={pickImage}
-               style={{
-                width:'60%',
-                backgroundColor:'skyblue',
-                borderRadius:20,
-                justifyContent:'center',
-                alignItems:'center',
-                alignSelf:'center'
-               }}
+                        style={{alignItems:'center',marginTop:0}}
                >
-                <Text style={{fontSize:20}}>Foto</Text>
+                    { <Image 
+                    
+                    source={image? {uri:image}: Placeholder }
+                    
+                    style={{   width: 88,
+                        height:200,
+                        width:200,
+                        borderRadius: 100,
+                        
+                        
+                        
+                        }}
+                />}
                </TouchableOpacity>
                     
              
             </SafeAreaView>
+
+
+
+
             
            
 

@@ -16,24 +16,38 @@
           {
             "photosPermission": "The app accesses your photos to let you share them with your friends."
           }
-        ]
+        ],
+        "expo-build-properties",{
+          "android":{
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          },
+          "ios":{
+            "deploymentTarget": "13.0"
+          }
+        },
+        ["@react-native-google-signin/google-signin"]
       ]
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.joaovmsf.Bora"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme":"Bora"
   }
 }

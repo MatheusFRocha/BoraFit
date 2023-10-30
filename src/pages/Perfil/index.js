@@ -132,7 +132,7 @@ export default function Perfil({ navigation }) {
             </Text>
         </View>
        
-        {image && <Image  source={{uri:image}} style={{   width: 88,
+        {image && <Image  source={{uri:image}} style={{  
             height:200,
             width:200,
             borderRadius: 100,

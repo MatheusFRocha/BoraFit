@@ -14,15 +14,40 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from './styles';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase';
-
-
+import { GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup } from "firebase/auth";
 
 export default function Login({ navigation }) {
 
     const [email, setEmail] = useState('j@gmail.com')
     const [password, setSenha] = useState("123123")
 
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+
+
+const logarGoogle =  () => {
+     signInWithPopup(auth, provider)
+    .then((result) =>{
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        console.log(token)
+    }).catch((error) =>{
+        console.log(error)
+    })
+
+}
+
+
+
     
+    
+
+
+
+
+
+
 
     async function createUser() {
 
@@ -202,6 +227,15 @@ export default function Login({ navigation }) {
 
 
                     >Esqueci minha senha</Text>
+
+                </TouchableOpacity>
+                   <TouchableOpacity style={styles.botaoRegistro}
+                    onPress={() => {logarGoogle()}}
+                >
+                    <Text style={styles.RegistroText}
+
+
+                    >Google</Text>
 
                 </TouchableOpacity>
 
