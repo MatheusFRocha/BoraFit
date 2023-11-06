@@ -86,9 +86,56 @@ export default function CriarSalaCorrida({ navigation }) {
 
 
   return (
+    
+    <View style={styles.container} >
+        <ImageBackground style={styles.image} source={require('../img/run_background.jpg')} imageStyle={{ opacity: 0.4, }}>     
+            <ScrollView>
+                <TextInput style={styles.input}
+                    onChangeText={setNomeCorrida}
+                    value={nomeCorrida}
+                    placeholder="Nome da Sala:"
+                    placeholderTextColor={'#000'}
+                />
+                <TextInput
+                    style={styles.textArea}
+                    multiline={true}
+                    numberOfLines={5}
+                    onChangeText={setDescricao}
+                    value={descricao}
+                    placeholder="Descrição:"
+                    placeholderTextColor={'#000'}
+                />
 
+                <View style={styles.viewBtn}>
+                    <TouchableOpacity style={styles.botao} >
+                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="run" color={"#000"} size={20} /> Percurso</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.botao} onPress={showDatepicker} >
+                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="calendar" color={"#000"} size={20} /> Data</Text>
+                    </TouchableOpacity>
+                    </View>
+                    <View style={styles.viewBtn}>
+                    <TouchableOpacity style={styles.botao} onPress={showTimepicker}>
+                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="clock" color={"#000"} size={20} /> Hora</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.botao}>
+                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="human" color={"#000"} size={20} /> Máx</Text>
+                    </TouchableOpacity>
+                </View>
 
-    <SafeAreaView style={styles.backgroundCorrida}>
+                <View style={styles.viewBtn}>
+                    <TouchableOpacity onPress={handleverificacampos} style={styles.botao}>
+                    <Text style={styles.txtBtn}><MaterialCommunityIcons name="check" color={"#000"} size={20} /> Criar</Text>
+                    </TouchableOpacity>
+                </View>
+
+            </ScrollView>
+        </ImageBackground>
+    </View>
+        
+    
+
+  /*  <SafeAreaView style={styles.backgroundCorrida}>
       <ScrollView>
       <ImageBackground source={require('../img/run_background.jpg')} resizeMode={'cover'} imageStyle={{ opacity: 0.3, }}>
         <View style={styles.container2}>
@@ -110,29 +157,29 @@ export default function CriarSalaCorrida({ navigation }) {
         <View style={styles.container3}>
         <View style={styles.teste}>
         <TouchableOpacity style={styles.botao} >
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="run" color={"white"} size={20} />Percurso</Text>
+          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="run" color={"#000"} size={20} />Percurso</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.botao} onPress={showDatepicker} >
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="calendar" color={"white"} size={20} />Data</Text>
+          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="calendar" color={"#000"} size={20} />Data</Text>
         </TouchableOpacity>
         </View>
         <View style={styles.teste}>
         <TouchableOpacity style={styles.botao} onPress={showTimepicker}>
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="clock" color={"white"} size={20} />Hora</Text>
+          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="clock" color={"#000"} size={20} />Hora</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.botao}>
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="human" color={"white"} size={20} />Máx</Text>
+          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="human" color={"#000"} size={20} />Máx</Text>
         </TouchableOpacity>
         
         </View>
         <TouchableOpacity onPress={handleverificacampos} style={styles.botao}>
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="check" color={"white"} size={20} />Criar</Text>
+          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="check" color={"#000"} size={20} />Criar</Text>
         </TouchableOpacity>
         </View>
         
         </ImageBackground>
         </ScrollView>
     </SafeAreaView>
-
+  */
   )
 }

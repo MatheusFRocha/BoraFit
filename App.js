@@ -21,6 +21,10 @@ import Categorias from './src/pages/Categorias';
 import Ressenha from './src/pages/Resenha';
 
 import CriarSala from './src/pages/CriarSala'
+import CriarSalaCorrida from './src/pages/CriarSalaCorrida'
+import Academia from './src/pages/CriarSala/academia';
+import Futebol from './src/pages/CriarSala/futebol';
+import Ciclismo from './src/pages/CriarSala/ciclismo';
 
 
 
@@ -79,6 +83,50 @@ export default function App() {
           }}
           name="CriarSala"
           component={CriarSala}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="academia"
+          component={Academia}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="futebol"
+          component={Futebol}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="ciclismo"
+          component={Ciclismo}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="CriarSalaCorrida"
+          component={CriarSalaCorrida}
 
         />
 
