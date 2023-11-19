@@ -1,44 +1,58 @@
-import React from "react";
-import { useState } from "react";
-import { View, Text, SafeAreaView, TextInput, Icon, ImageBackground } from 'react-native';
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import React from "react"; 
+import { useState, useEffect } from "react";
+import { Modal, Pressable, View, Text, TextInput, ImageBackground} from 'react-native';
 import styles from './styles';
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { db } from '../../config/firebase';
-import { Button } from "react-native";
-
-
-
+import DateTimePicker from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
 
 export default function CriarSalaCorrida({ navigation }) {
+ 
 
-  const image = { uri: './img/run_background' };
   const auth = getAuth();
-  const [membros, setMembros] = useState('')
+  const [membros, setMembros] = useState(0);
   const [nomeCorrida, setNomeCorrida] = useState('')
   const [descricao, setDescricao] = useState('')
-  const [time, setTime] = useState('')
-  const [date, setDate] = useState(new Date());
-  const [idSala, setUser] = useState('')
+  const [value, setValue] = useState(dayjs());
+  const [dataRs, setData] = useState();
+  const [horaRs, setHora] = useState();
+  const [idSala, setUser] = useState('');
+  const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDate(currentDate);
+
+    const showdata = () => {
+      if (value != "") {
+      setModalCalendarVisible(!modalCalendarVisible);
+
+      var resultado = value.split(" ");
+
+      setData(resultado[0]);
+      console.log(dataRs);
+
+      setHora(resultado[1]);
+      console.log(horaRs);
+
+      } else {
+
+        console.log('nao deu');
+      }
+    };
+
+  const handleIncrease = () => {
+    
+    setMembros((valor) => valor + 1);
   };
 
-  const showMode = (currentMode) => {
-    DateTimePickerAndroid.open({
-      value: date,
-      onChange,
-      mode: currentMode,
-      is24Hour: true
-    });
+  const handleDecrease = () => {
+    setMembros(membros - 1);
   };
 
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, (user) => { 
     if (user) {
       const uid = user.uid;
       setUser(user.uid)
@@ -48,15 +62,8 @@ export default function CriarSalaCorrida({ navigation }) {
   }
   );
 
-  const showDatepicker = () => {
-    showMode('date');
-  };
 
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
-  const handleverificacampos = async () => {
+  const handleverificacampos = async () => { 
     if (membros === "" || descricao === "") {
       alert('Por favor verifique os campos')
     } else {
@@ -66,7 +73,10 @@ export default function CriarSalaCorrida({ navigation }) {
         descricao: descricao,
         nomeCorrida: nomeCorrida,
         Id: idSala,
-        membros: membros
+        membros: membros,
+        dataGrupo: dataRs,
+        horaGrupo: horaRs
+
       };
       setDoc(docRef, envia)
 
@@ -87,99 +97,108 @@ export default function CriarSalaCorrida({ navigation }) {
 
   return (
     
-    <View style={styles.container} >
-        <ImageBackground style={styles.image} source={require('../img/run_background.jpg')} imageStyle={{ opacity: 0.4, }}>     
-            <ScrollView>
-                <TextInput style={styles.input}
-                    onChangeText={setNomeCorrida}
-                    value={nomeCorrida}
-                    placeholder="Nome da Sala:"
-                    placeholderTextColor={'#000'}
-                />
-                <TextInput
-                    style={styles.textArea}
-                    multiline={true}
-                    numberOfLines={5}
-                    onChangeText={setDescricao}
-                    value={descricao}
-                    placeholder="Descrição:"
-                    placeholderTextColor={'#000'}
-                />
-
-                <View style={styles.viewBtn}>
-                    <TouchableOpacity style={styles.botao} >
-                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="run" color={"#000"} size={20} /> Percurso</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.botao} onPress={showDatepicker} >
-                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="calendar" color={"#000"} size={20} /> Data</Text>
-                    </TouchableOpacity>
-                    </View>
-                    <View style={styles.viewBtn}>
-                    <TouchableOpacity style={styles.botao} onPress={showTimepicker}>
-                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="clock" color={"#000"} size={20} /> Hora</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.botao}>
-                        <Text style={styles.txtBtn}><MaterialCommunityIcons name="human" color={"#000"} size={20} /> Máx</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.viewBtn}>
-                    <TouchableOpacity onPress={handleverificacampos} style={styles.botao}>
-                    <Text style={styles.txtBtn}><MaterialCommunityIcons name="check" color={"#000"} size={20} /> Criar</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </ScrollView>
-        </ImageBackground>
-    </View>
-        
     
-
-  /*  <SafeAreaView style={styles.backgroundCorrida}>
+  <View style={styles.container}>
+    <ImageBackground style={styles.image} source={require('../img/run_background.jpg')} imageStyle={{ opacity: 0.4, }}>
       <ScrollView>
-      <ImageBackground source={require('../img/run_background.jpg')} resizeMode={'cover'} imageStyle={{ opacity: 0.3, }}>
-        <View style={styles.container2}>
-          <TextInput style={styles.input}
-            onChangeText={setNomeCorrida}
-            value={nomeCorrida}
-            placeholder="Nome da Sala"
-          />
+        <TextInput style={styles.input}
+          onChangeText={setNomeCorrida}
+          value={nomeCorrida}
+          placeholder="Nome da Sala:"
+          placeholderTextColor={'#000'}
+        />
 
-            <TextInput
-              style={styles.textArea}
-              multiline={true}
-              numberOfLines={5}
-              onChangeText={setDescricao}
-              value={descricao}
-              placeholder="Descrição da atividade"
-            />
+        <TextInput
+          style={styles.textArea}
+          multiline={true}
+          numberOfLines={5}
+          onChangeText={setDescricao}
+          value={descricao}
+          placeholder="Descrição:"
+          placeholderTextColor={'#000'}
+        />
+
+        <View style={styles.viewBtn}>
+          <TouchableOpacity style={styles.botao} >
+            <Text style={styles.txtBtn}><MaterialCommunityIcons name="run" color={"#000"} size={20} /> Percurso</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.botao} onPress={() => setModalCalendarVisible(true)}  >
+            <Text style={styles.txtBtn}><MaterialCommunityIcons name="calendar" color={"#000"} size={20} /> Data</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.container3}>
-        <View style={styles.teste}>
-        <TouchableOpacity style={styles.botao} >
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="run" color={"#000"} size={20} />Percurso</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.botao} onPress={showDatepicker} >
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="calendar" color={"#000"} size={20} />Data</Text>
-        </TouchableOpacity>
+
+        <View style={styles.viewBtn}>
+
+          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.botao}>
+            <Text style={styles.txtBtn}><MaterialCommunityIcons name="human" color={"#000"} size={20} /> Máx 10</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.teste}>
-        <TouchableOpacity style={styles.botao} onPress={showTimepicker}>
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="clock" color={"#000"} size={20} />Hora</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.botao}>
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="human" color={"#000"} size={20} />Máx</Text>
-        </TouchableOpacity>
-        
+        <View style={styles.viewBtn}>
+          <TouchableOpacity onPress={handleverificacampos} style={styles.botao}>
+            <Text style={styles.txtBtn}><MaterialCommunityIcons name="check" color={"#000"} size={20} /> Criar</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={handleverificacampos} style={styles.botao}>
-          <Text style={styles.botaoBuscarCriar}><MaterialCommunityIcons name="check" color={"#000"} size={20} />Criar</Text>
-        </TouchableOpacity>
+
+        <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={handleIncrease}>
+                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="plus-box" color={"#00bf63"} size={50} /></Text>
+                </Pressable>
+
+                <Text style={styles.txtBtn}>{membros}</Text>
+
+
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={handleDecrease}>
+                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="minus-box" color={"#00bf63"} size={50} /></Text>
+                </Pressable>
+
+                <Pressable
+                  style={styles.botao}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
         </View>
-        
-        </ImageBackground>
-        </ScrollView>
-    </SafeAreaView>
-  */
-  )
-}
+        <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalCalendarVisible}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View style={styles.containerCalendar}>
+                  <DateTimePicker
+                    locale={'en'}
+                    mode={'datetime'}
+                    value={value}
+                    onValueChange={(date) => setValue(date)}
+                  />
+                </View>
+                <Pressable
+                  style={styles.botao}
+                  onPress={showdata}>
+                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      </ScrollView>
+    </ImageBackground>
+  </View>
+)
+};
