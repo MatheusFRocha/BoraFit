@@ -5,6 +5,12 @@ const styles = StyleSheet.create({
     container: {
         flex:1
     },
+    mapContainer: {
+        flex:1
+    },
+    map: {
+        height: '50%'
+    },
     image: {
         flex:1,
         justifyContent:'center'

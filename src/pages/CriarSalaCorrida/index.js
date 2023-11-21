@@ -8,7 +8,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from '../../config/firebase';
 import DateTimePicker from 'react-native-ui-datepicker';
-import dayjs from 'dayjs';
+
+
 
 export default function CriarSalaCorrida({ navigation }) {
  
@@ -17,25 +18,31 @@ export default function CriarSalaCorrida({ navigation }) {
   const [membros, setMembros] = useState(0);
   const [nomeCorrida, setNomeCorrida] = useState('')
   const [descricao, setDescricao] = useState('')
-  const [value, setValue] = useState(dayjs());
-  const [dataRs, setData] = useState();
-  const [horaRs, setHora] = useState();
+  const [value, setValue] = useState();
   const [idSala, setUser] = useState('');
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [dataSala, setDataSala] = useState();
+  const [horaSala, setHoraSala] = useState();
 
 
-    const showdata = () => {
+  const mapChange = () => {
+    navigation.navigate('MapCorrida')
+  }
+
+
+    const showdata = async() => {
+      
       if (value != "") {
       setModalCalendarVisible(!modalCalendarVisible);
 
       var resultado = value.split(" ");
 
-      setData(resultado[0]);
-      console.log(dataRs);
+      var dataRs = resultado[0];
+      var horaRs = resultado[1];
 
-      setHora(resultado[1]);
-      console.log(horaRs);
+      setDataSala(dataRs);
+      setHoraSala(horaRs)
 
       } else {
 
@@ -74,8 +81,8 @@ export default function CriarSalaCorrida({ navigation }) {
         nomeCorrida: nomeCorrida,
         Id: idSala,
         membros: membros,
-        dataGrupo: dataRs,
-        horaGrupo: horaRs
+        dataGrupo: dataSala,
+        horaGrupo: horaSala
 
       };
       setDoc(docRef, envia)
@@ -119,7 +126,7 @@ export default function CriarSalaCorrida({ navigation }) {
         />
 
         <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.botao} >
+          <TouchableOpacity style={styles.botao} onPress={mapChange} >
             <Text style={styles.txtBtn}><MaterialCommunityIcons name="run" color={"#000"} size={20} /> Percurso</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.botao} onPress={() => setModalCalendarVisible(true)}  >
@@ -182,9 +189,10 @@ export default function CriarSalaCorrida({ navigation }) {
               <View style={styles.modalView}>
                 <View style={styles.containerCalendar}>
                   <DateTimePicker
-                    locale={'en'}
+                    locale={'pt_br'}
                     mode={'datetime'}
                     value={value}
+                    
                     onValueChange={(date) => setValue(date)}
                   />
                 </View>

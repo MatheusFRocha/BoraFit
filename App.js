@@ -22,6 +22,7 @@ import Ressenha from './src/pages/Resenha';
 
 import CriarSala from './src/pages/CriarSala'
 import CriarSalaCorrida from './src/pages/CriarSalaCorrida'
+import MapCorrida from './src/pages/CriarSalaCorrida/mapCorrida'
 import Academia from './src/pages/CriarSala/academia';
 import Futebol from './src/pages/CriarSala/futebol';
 import Ciclismo from './src/pages/CriarSala/ciclismo';
@@ -72,6 +73,17 @@ export default function App() {
           }}
           name="Configuracoes"
           component={Configuracoes}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="MapCorrida"
+          component={MapCorrida}
 
         />
 
