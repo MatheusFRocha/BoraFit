@@ -19,8 +19,9 @@ import CriarPerfil from './src/pages/CriarPerfil';
 import Categorias from './src/pages/Categorias';
 
 import Ressenha from './src/pages/Resenha';
-
+import Grupos from './src/pages/grupos/grupos';
 import CriarSala from './src/pages/CriarSala'
+import Pessoa from './src/pages/Pessoas';
 
 
 
@@ -137,11 +138,7 @@ export default function App() {
 
 
         <Stack.Screen
-          options={{
-            title: '',
-            headerTransparent: true,
-            headerShown: false,
-          }}
+          
           name="Mensagens"
           component={Mensagens}
 
@@ -177,6 +174,26 @@ export default function App() {
           }}
           name="Lobby"
           component={Lobby}
+
+        />
+        <Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="Grupos"
+          component={Grupos}
+
+        />
+        <Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="Pessoa"
+          component={Pessoa}
 
         />
 

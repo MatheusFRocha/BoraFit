@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc, setDoc,doc } from "firebase/firestore";
-import { db } from '../../config/firebase';
+import { db, storage } from '../../config/firebase';
 import styles from './styles';
 import {
     KeyboardAvoidingView,
@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import Placeholder from '../../../assets/Placeholder.jpg'
 import * as ImagePicker from 'expo-image-picker';
-
+import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage'
 
 
 export default function CriarPerfil({ navigation }) {
@@ -28,16 +28,16 @@ export default function CriarPerfil({ navigation }) {
     const [idade, setIdade] = useState('')
     const [a, setUser] = useState('')
     const [errorLogin, setErrorLogin] = useState("")
-   
-    const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+    const [progress, setProgress] = useState(0)
+  
     const [image, setImage] = useState(null);
 
    
-    const pickImage = async () => {
+        async function pickImage (){
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
         
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
+         mediaTypes: ImagePicker.MediaTypeOptions.Images, 
           allowsEditing: true,
           aspect: [4, 3],
           quality: 1,
@@ -45,10 +45,36 @@ export default function CriarPerfil({ navigation }) {
     
         
         if (!result.canceled) {
-          setImage(result.assets[0].uri);
-          {}
+            setImage(result.assets[0].uri);
+            await handlefoto(result.assets[0].uri, "image")
           
         }}
+        async function handlefoto(uri, fileType){
+            
+            const response = await fetch(uri)
+            const blob = await response.blob();
+            const storageRef = ref(storage, "Stuff/" + new Date().getTime())
+            const uploadTask = uploadBytesResumable(storageRef, blob)
+
+
+            uploadTask.on("state_changed",
+            (snapshot) => {
+                const progress =  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                console.log("Upload is " + progress + "% done");
+                setProgress(progress.toFixed())
+            },
+            (error) =>{
+                    console.log(error)
+            },
+            () =>{
+                getDownloadURL(uploadTask.snapshot.ref).then( async(downloadURL) =>{
+                    console.log("File available at", downloadURL)
+                    setImage(downloadURL)
+                    
+                });
+            }
+            )
+          }
       
    
     

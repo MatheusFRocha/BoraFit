@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../../config/firebase';
-import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { db, storage } from '../../config/firebase';
+import { collection, query, where, getDocs, doc, setDoc, onSnapshot } from "firebase/firestore";
 import {
     KeyboardAvoidingView,
     Input,
@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { getAuth } from "firebase/auth";
-
+import Placeholder from '../../../assets/Placeholder.jpg'
+import * as ImagePicker from 'expo-image-picker';
+import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage'
 
 
 export default function Perfil({ navigation }) {
@@ -27,10 +29,62 @@ export default function Perfil({ navigation }) {
         const [cidade, setCidade] = useState("")
         const [idade, setIdade] = useState('')
         const [image, setImage] = useState('')
+        const [progress, setProgress] = useState(0)
      
-            
-  
+        useEffect(() => {
+
+             
+            info()
        
+            
+             
+         },[])
+
+
+
+         async function pickImage (){
+            // No permissions request is necessary for launching the image library
+            let result = await ImagePicker.launchImageLibraryAsync({
+            
+             mediaTypes: ImagePicker.MediaTypeOptions.Images, 
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
+        
+            
+            if (!result.canceled) {
+              
+                await handlefoto(result.assets[0].uri, "image")
+              
+            }}
+            async function handlefoto(uri, fileType){
+                
+                const response = await fetch(uri)
+                const blob = await response.blob();
+                const storageRef = ref(storage, "Stuff/" + new Date().getTime())
+                const uploadTask = uploadBytesResumable(storageRef, blob)
+    
+    
+                uploadTask.on("state_changed",
+                (snapshot) => {
+                    const progress =  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    console.log("Upload is " + progress + "% done");
+                    setProgress(progress.toFixed())
+                },
+                (error) =>{
+                        console.log(error)
+                },
+                () =>{
+                    getDownloadURL(uploadTask.snapshot.ref).then( async(downloadURL) =>{
+                        console.log("File available at", downloadURL)
+                        setImage(downloadURL)
+                        
+                    });
+                }
+                )
+              }
+
            
 
 
@@ -51,13 +105,14 @@ export default function Perfil({ navigation }) {
                     querySnapshot.forEach((doc) => {
                   
                         const dados = (doc.id, " => ", doc.data());
-                          setImage(dados.Image)
+                          
                           setNome(dados.nome)
                           setSobreNome(dados.sobreNome)
                           setCidade(dados.Cidade)
                           setIdade(dados.Idade)
+                          setImage(dados.Image)
                        
-                        console.log(dados.Image)
+                       
                         
                           
                       } 
@@ -74,13 +129,7 @@ export default function Perfil({ navigation }) {
                 
             }
               
-            useEffect(() => {
-
-             
-               info()
-               
-                
-            },[])
+         
 
             
              
@@ -95,6 +144,7 @@ export default function Perfil({ navigation }) {
                         sobreNome: sobreNome,
                          Idade: idade, 
                          Cidade: cidade,
+                         Image:image
                         };
                      setDoc(docRef, envia)
         
@@ -132,14 +182,23 @@ export default function Perfil({ navigation }) {
             </Text>
         </View>
        
-        {image && <Image  source={{uri:image}} style={{  
-            height:200,
-            width:200,
-            borderRadius: 100,
-            
-            
-            
-            }}/> }
+        <TouchableOpacity onPress={pickImage}
+                        style={{alignItems:'center',marginTop:0}}
+               >
+                    { <Image 
+                    
+                    source={ image? {uri:image}: Placeholder }
+                    
+                    style={{   width: 88,
+                        height:200,
+                        width:200,
+                        borderRadius: 100,
+                        
+                        
+                        
+                        }}
+                />}
+               </TouchableOpacity>
      
         
         
