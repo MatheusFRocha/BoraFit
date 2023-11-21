@@ -63,6 +63,12 @@ const styles = StyleSheet.create({
         marginBottom: 70,
         color: 'green'
     },
+    image:{
+        borderRadius:75,
+        width:150,
+        height:150,
+        borderWidth: 5
+    }
 
 
 });
