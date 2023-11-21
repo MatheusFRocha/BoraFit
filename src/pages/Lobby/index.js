@@ -7,14 +7,25 @@ import styles from './styles';
 
     export default function Lobby({navigation , route}) {
         
-        async function CriarSala() {
-
-            navigation.navigate("CriarSala")
-    
-        };
         const { id, esporte } = route.params;
 
         console.log(id, esporte )
+
+        async function CriarSala() {
+
+            if (id == 2){
+                navigation.navigate("futebol")
+            }else if (id ==1) {
+                navigation.navigate("CriarSalaCorrida")
+            }else if (id ==3) {
+                navigation.navigate("academia")
+            }else if (id ==4) {
+                navigation.navigate("ciclismo")
+            }
+
+    
+        };
+        
     return (
         
      <View>

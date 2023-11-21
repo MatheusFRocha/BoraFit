@@ -23,6 +23,7 @@ export default function Categorias({navigation}){
             
 
             <FlatList 
+            
                 data={
                     [
                         {id:1 , esporte:'Corrida' , img:'https://pacefit.com.br/wp-content/uploads/2018/02/Meus-primeiros-10km.jpg.webp'},
@@ -35,31 +36,18 @@ export default function Categorias({navigation}){
                     
                 }
                 renderItem={({item} ) => <TouchableOpacity onPress={() => navigation.navigate("Lobby", {id:item.id, esporte:item.esporte} ) } style={styles.containerImg} key={item.id} >
-                  
-
                 
                 <Image
                 style={styles.imgSports}
                 source={{ uri: item.img }}
                 />
-
-
-
+                
                 </TouchableOpacity>
-              
-            
             }
 
            />
            
-
            </View>
-
-          
-                
-
-         
-           
 
         </SafeAreaView>
 
