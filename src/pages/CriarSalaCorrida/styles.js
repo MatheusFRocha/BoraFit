@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
         borderBottomColor: "#00bf63"
 
     },
+    search: {
+        backgroundColor: '#3CB371',
+        height: '45%'
+    },
     textArea: {
         marginTop: 25,
         width: '85%',

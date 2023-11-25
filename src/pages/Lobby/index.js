@@ -9,7 +9,6 @@ import styles from './styles';
         
         const { id, esporte } = route.params;
 
-        console.log(id, esporte )
 
         async function CriarSala() {
 
