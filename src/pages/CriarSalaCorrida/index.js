@@ -5,15 +5,19 @@ import styles from './styles';
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, collection } from "firebase/firestore";
 import { db } from '../../config/firebase';
 import DateTimePicker from 'react-native-ui-datepicker';
 
 
 
-export default function CriarSalaCorrida({ navigation }) {
- 
+export default function CriarSalaCorrida({ navigation, route}) {
 
+  const {destino, destinoDois, dist} = route.params;
+
+  const [inicio, setInicio] = useState();
+  const [final, setFinal] = useState();
+  const [distance, setDistance] = useState();
   const auth = getAuth();
   const [membros, setMembros] = useState(0);
   const [nomeCorrida, setNomeCorrida] = useState('')
@@ -22,12 +26,21 @@ export default function CriarSalaCorrida({ navigation }) {
   const [idSala, setUser] = useState('');
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  
   const [dataSala, setDataSala] = useState();
   const [horaSala, setHoraSala] = useState();
+ 
+useEffect(() => {
+    setInicio(destino);
+    setFinal(destinoDois);
+    setDistance(dist);
+},[])
+
 
 
   const mapChange = () => {
     navigation.navigate('MapCorrida')
+    
   }
 
 
@@ -71,20 +84,32 @@ export default function CriarSalaCorrida({ navigation }) {
 
 
   const handleverificacampos = async () => { 
+    
+
     if (membros === "" || descricao === "") {
       alert('Por favor verifique os campos')
     } else {
 
-      const docRef = doc(db, "Atividades", idSala, "Corrida", nomeCorrida);
+      const docRef = doc(db, "Salas", "corrida", "sala", nomeCorrida);
       const envia = {
         descricao: descricao,
         nomeCorrida: nomeCorrida,
-        Id: idSala,
+        criador: idSala,
         membros: membros,
         dataGrupo: dataSala,
-        horaGrupo: horaSala
+        horaGrupo: horaSala,
+        inicioPercurso: inicio,
+        finalPercurso: final,
+        participantes: [idSala],
+        distancia: dist
+       
+        
+        
+
+
 
       };
+
       setDoc(docRef, envia)
 
         .then(
