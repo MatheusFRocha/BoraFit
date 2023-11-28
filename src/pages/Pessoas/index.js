@@ -50,7 +50,7 @@ const Pessoa = ({navigation, route}) => {
 
 
             <View style={style.mens}>
-                    <Text> teste</Text>
+                    
             </View>
 
 

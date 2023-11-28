@@ -6,30 +6,32 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { db } from '../../config/firebase';
 import { collection, where, setDoc,doc, query,getDocs, onSnapshot, DocumentData } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Placeholder from '../../../assets/Placeholder.jpg'
 
 import { FlatList } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
 
 
 
 const Mensagens = ({navigation}) => {
-        const auth = getAuth()
-        const a = auth.currentUser.uid;
+        
         const [nome, setNome] = useState('')
-        const [id, setID] = useState()
+        const [id, setID] = useState(0)
         const [grupos, setGrupos] = useState([])
         const [image, setImage] = useState('')
         const docRef = doc(db, "chats", 'teste');
         const [att, seAtt] = useState(false)
-
+        const auth = getAuth();
+        const  [userlog , setUser] = useState('')
         
          
    
             
             
         async function nomelogado(){
-            const q = query(collection(db, "Perfil"), where("Id", "==", a));
+            const q = query(collection(db, "Perfil"), where("Id", "==", userlog));
             
 
             const querySnapshot = await getDocs(q);
@@ -40,6 +42,7 @@ const Mensagens = ({navigation}) => {
               
                     const dados = (doc.id, " => ", doc.data());
                     setNome(dados.nome)    
+
                                          
                   }                  
                   )  ;                 
@@ -62,8 +65,10 @@ const Mensagens = ({navigation}) => {
             querySnapshotteste.forEach((doc)=>{
                 list.push({...doc.data(), id:doc.id})
             })
+
+            
             setGrupos(list)
-            console.log(grupos)
+            
            
             
           
@@ -72,35 +77,55 @@ const Mensagens = ({navigation}) => {
         }
 
         useEffect(() =>{
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    
+                    setUser(user.uid)
+                    
+                } else {
+                    console.log('ninguem logado.')
+                }
+            }
+            );
             nomelogado()
             chats()
             
         
          
           
-        },[])
+        })
     
 
      
         
 
     const StartChat = async () => {
+
         
-        try{
+        
+
+        const salas = query(collection(db, "chats"));
+            
+            const querySnapshot2 = await getDocs(salas);
+            if(querySnapshot2.size != 0){
+                setID(querySnapshot2.size)
+            }
+           
+         try{
             const salas = query(collection(db, "chats"));
             
             const querySnapshot2 = await getDocs(salas);
              setID(querySnapshot2.size)
             
             console.log('Iniciando chat')
-            console.group(nome)
+            console.log('nome',nome)
             
                      
-            const docRef = doc(db, "chats", nome+id+a);
-            const envia = {nome: 'Daniel',
-                Image:'https://s2-g1.glbimg.com/u5k0ayWEWM2DsEFZjP-asx9mr0U=/0x0:1080x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/j/F/p0elVoQZ2CHUrIOuwdYw/297250193-426355525942835-3588685500474085344-n.jpg',
-                documentId: id+1,
-                status:'Pessoa'
+            const docRef = doc(db, "chats", nome+userlog+id+1);
+            const envia = {nome: 'teste',
+                Image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXESbTGMa4YLH_sNx3D4AUylVdUaprBuDfCQ&usqp=CAU',
+                documentId: nome+userlog+id+1,
+                status:'Grupos'
                  };
              setDoc(docRef, envia)
     
@@ -123,8 +148,10 @@ const Mensagens = ({navigation}) => {
         }
        
        
-    }
-    
+            }
+
+        
+        
     
     const paginachat= (status) =>{
         if (status === 'pessoal'){
@@ -139,6 +166,8 @@ const Mensagens = ({navigation}) => {
         console.log(status)
 
     }
+
+
 
   return (
     <View  style={styles.container}> 
@@ -181,12 +210,19 @@ const Mensagens = ({navigation}) => {
 
            />
 
-
-        <Text>teste</Text>
-         <TouchableOpacity style={styles.fab} onPress={StartChat}>
             
-            <Ionicons  name="add" size={30} style={styles.icone}/>
-        </TouchableOpacity>
+        
+         <TouchableWithoutFeedback style={styles.fab} onPress={StartChat}>
+         
+                <Ionicons  name="add" size={30} style={styles.icone}/>
+            
+            
+        </TouchableWithoutFeedback>
+
+
+
+
+      
     </View>
    
   )

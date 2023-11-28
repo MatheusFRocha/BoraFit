@@ -8,20 +8,22 @@ container:{
     width: '100%',
     marginLeft:10,
     marginTop:50,
+   
 
 
 },
 fab:{
-    position:'absolute',
+   //position:'absolute',
+   alignSelf:'flex-end',
     width: 56,
     height: 56,
     alignItems: 'center',
     justfyContent:'center',
-    right: 20,
-    bottom: 20,
+    right: 15,
+    bottom: 10,
     backgroundColor: '#03a9f4',
     borderRadius:30,
-    elevation:8
+    elevation:5
 },
 
 icone:{
@@ -38,6 +40,21 @@ card:{
     gap:30
     
     
+},
+secondary:{
+    //position:'absolute',
+    
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justfyContent:'center',
+    right: 22,
+   // marginBottom: 80,
+    backgroundColor: '#03a9f4',
+    borderRadius:30,
+    alignSelf:'flex-end'
+    //elevation:5
+
 }
 
 
