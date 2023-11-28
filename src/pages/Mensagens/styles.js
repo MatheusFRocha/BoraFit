@@ -12,6 +12,18 @@ container:{
 
 
 },
+input: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 15,
+    height: 50,
+    padding: 10,
+    height: 50,
+    width: 300,
+    borderBottomWidth: 1,
+    borderBottomColor: "green"
+
+},
 fab:{
    //position:'absolute',
    alignSelf:'flex-end',
@@ -25,6 +37,35 @@ fab:{
     borderRadius:30,
     elevation:5
 },
+
+viewBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+},
+centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },borderStyle: 'solid',
+    borderWidth: 3
+    },
+    txtBtn: {
+        color: '#000',
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
 
 icone:{
     marginTop:'15%'
@@ -40,6 +81,19 @@ card:{
     gap:30
     
     
+},
+botao: {
+    borderStyle: 'solid',
+    borderColor: '#000',
+    borderWidth: 4,
+    borderRadius: 20,
+    backgroundColor: '#00bf63',
+    marginTop: 25,
+    height: 50,
+    width: 125,
+    alignItems: 'center',
+    paddingTop: 8
+
 },
 secondary:{
     //position:'absolute',
