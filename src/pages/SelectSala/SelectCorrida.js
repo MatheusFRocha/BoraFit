@@ -55,7 +55,7 @@ export default function SelectCorrida({ navigation }) {
                     renderItem={({ item }) =>
                         <SafeAreaView>
 
-                            <TouchableOpacity style={styles.listaSala} onPress={() => navigation.navigate("SalaSelecionada",{nomeCorrida:item.nomeCorrida, descricao:item.descricao, origin:[item.inicioPercurso.latitude, item.inicioPercurso.longitude], destination:[item.finalPercurso.latitude, item.finalPercurso.longitude], dataGrupo: item.dataGrupo, horaGrupo: item.horaGrupo, membros: item.membros, participantes: item.participantes})}>
+                            <TouchableOpacity style={styles.listaSala} onPress={() => navigation.navigate("SalaSelecionada",{nomeCorrida:item.nomeCorrida, descricao:item.descricao, origin:[item.inicioPercurso.latitude, item.inicioPercurso.longitude], destination:[item.finalPercurso.latitude, item.finalPercurso.longitude], dataGrupo: item.dataGrupo, horaGrupo: item.horaGrupo, membros: item.membros, participantes: item.participantes, distancia:item.distancia})}>
 
                                 <Text style={styles.txtBtn}>{item.nomeCorrida}</Text>
 

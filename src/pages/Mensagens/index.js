@@ -126,127 +126,7 @@ const Mensagens = ({ navigation }) => {
 
     })
 
-    const startpessoalchat = async() =>{
-        const q = query(collection(db, "Perfil"), where("Id", "==", refEmail));
-        console.log(refEmail)
-
-        const querySnapshot = await getDocs(q);
-
-        
-        
-
-        try{
-            querySnapshot.forEach((doc) => {
-          
-                const dados = (doc.id, " => ", doc.data());
-                     setAmigo(dados.Id)
-                     setParticipandos([dados.Id, userlog])
-                     setModalVisible(false)    
-
-                     criachat();
-              });           
-        } catch{
-           alert('error')
-        }}
-
-
-        const criachat = async()=>{
-
-            console.log('entrou')
-        const salas = query(collection(db, "chats"));
-
-        const querySnapshot2 = await getDocs(salas);
-        if (querySnapshot2.size != 0) {
-            setID(querySnapshot2.size)
-        }else{
-            setID(0)
-        }
-
-        //
-
-        try {
-            const salas = query(collection(db, "chats"));
-
-            const querySnapshot2 = await getDocs(salas);
-            setID(querySnapshot2.size)
-
-            const docRef = doc(db, "chats",  userlog + amigo + 1);
-
-            const envia = {
-                participantes: participantes,
-               
-                documentId:  userlog + amigo+ id + 1,
-                status: 'Pessoa'
-            };
-            setDoc(docRef, envia)
-
-                .then(
-
-                    nomelogado(),
-                    chats(),
-
-                    alert('Criado'),
-
-
-
-                ).catch((error) => {
-                    console.log(error)
-                })
-
-
-        } catch (e) {
-            console.log(e)
-        }
-
-        //
-            
-        }
-
-
-       /* const salas = query(collection(db, "chats"));
-
-        const querySnapshot2 = await getDocs(salas);
-        if (querySnapshot2.size != 0) {
-            setID(querySnapshot2.size)
-        }
-
-        try {
-            const salas = query(collection(db, "chats"));
-
-            const querySnapshot2 = await getDocs(salas);
-            setID(querySnapshot2.size)
-
-            console.log('Iniciando chat')
-            console.log('nome', nome)
-
-
-            const docRef = doc(db, "chats", nome + userlog + id + 1);
-
-            const envia = {
-                participantes: [userlog , refEmail],
-                documentId: nome + userlog + id + 1,
-                status: 'Pessoa'
-            };
-            setDoc(docRef, envia)
-
-                .then(
-
-                    nomelogado(),
-                    chats(),
-
-                    alert('Criado'),
-
-
-
-                ).catch((error) => {
-                    console.log(error)
-                })
-
-
-        } catch (e) {
-            console.log(e)
-        }
-        */
+   
     
 
 
@@ -308,16 +188,13 @@ const Mensagens = ({ navigation }) => {
 
 
     const paginachat = (status) => {
-        if (status === 'pessoal') {
-            // navigation.navigate('')
-            console.log(status)
-        }
+       
         if (status === 'grupo') {
             //navigation.navigate('')
             console.log(status)
         }
 
-        console.log(status)
+      
 
     }
 
@@ -389,7 +266,7 @@ const Mensagens = ({ navigation }) => {
                                 value={refEmail}>
 
                                 </TextInput>
-                            <Pressable style={styles.botao} onPress={ startpessoalchat}>
+                            <Pressable style={styles.botao} onPress={ ''}>
                                 <Text style={styles.txtBtn} >OK</Text>
                             </Pressable>
                         </View>

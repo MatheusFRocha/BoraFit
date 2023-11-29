@@ -7,7 +7,7 @@ import { Feather } from '@expo/vector-icons';
 
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, where, setDoc, doc, getDocs, onSnapshot, DocumentData, documentId, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection,updateDoc, where, setDoc, doc, getDocs, onSnapshot, DocumentData, documentId, addDoc, serverTimestamp } from "firebase/firestore";
 import { db, storage } from '../../config/firebase';
 import style from './styles'
 import { useLayoutEffect } from 'react';
@@ -15,8 +15,9 @@ import { createdAt } from 'expo-updates';
 import styles from '../Mensagens/styles';
 import { query, orderBy, limit } from "firebase/firestore";
 import { List } from 'react-admin';
+import {  Pressable} from 'react-native';
 
-const Pessoa = ({ navigation, route }) => {
+const Grupos = ({ navigation, route }) => {
 
   // const [image, setImage] = useState('')
   const auth = getAuth();
@@ -110,8 +111,7 @@ const Pessoa = ({ navigation, route }) => {
   }
 
   const mdandarMensagem = async () => {
-    const mens = mensagemtxt.trim();
-    if (mens.length === 0) return;
+    
 
     const msgref = collection(db, `chats/${idsala}/messages`);
 
@@ -126,47 +126,13 @@ const Pessoa = ({ navigation, route }) => {
 
     setMensagemtxt('')
 
-    mensagens()
+    
 
 
 
 
   }
-  const saiirgrupo = async () => {
-   
-    const tirar = pessoasnogrupo.filter(pessoa => pessoa != `${userlog}`)
-    const docRef = doc(db, "chats", idsala);
   
-    
-    const envia = {
-        participantes: tirar,
-       
-        
-    };
-    console.log('1')
-    setDoc(docRef, envia)
-
-        .then(
-            navigation.navigate( "Home" ),
-            
-
-            alert('SAIU'),
-
-
-
-        ).catch((error) => {
-            console.log(error)
-        })
-
-
-
-    
-
-     
-
-
-  }
-
 
 
 
@@ -204,7 +170,7 @@ const Pessoa = ({ navigation, route }) => {
 
 
 
-          <TouchableOpacity onPress={saiirgrupo}>
+          <TouchableOpacity onPress={''}>
             <MaterialCommunityIcons name="account-cog" />
           </TouchableOpacity>
         </View>
@@ -234,7 +200,6 @@ const Pessoa = ({ navigation, route }) => {
 
 
 
-export default Pessoa
       <View style={style.input}>
         <TextInput style={style.text}
           placeholder='escreva uma mensagem'
@@ -245,9 +210,9 @@ export default Pessoa
 
         />
 
-        <TouchableOpacity style={style.send} onPress={mdandarMensagem}>
-          <Feather name="send" size={24} color="black" />
-        </TouchableOpacity>
+        <Pressable style={style.send} onPress={mdandarMensagem}>
+          <Text> Enviar </Text>
+        </Pressable>
 
       </View>
 
@@ -269,4 +234,4 @@ export default Pessoa
   )
 }
 
-export default Pessoa
+export default Grupos

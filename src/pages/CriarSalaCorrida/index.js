@@ -1,6 +1,6 @@
-import React from "react"; 
+import React from "react";
 import { useState, useEffect } from "react";
-import { Modal, Pressable, View, Text, TextInput, ImageBackground} from 'react-native';
+import { Modal, Pressable, View, Text, TextInput, ImageBackground } from 'react-native';
 import styles from './styles';
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,13 +11,13 @@ import DateTimePicker from 'react-native-ui-datepicker';
 import Placeholder from '../../../assets/Placeholder.jpg'
 import { storage } from '../../config/firebase';
 import * as ImagePicker from 'expo-image-picker';
-import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage'
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { collecion, where, query, getDocs, onSnapshot, DocumentData } from "firebase/firestore";
 
 
-export default function CriarSalaCorrida({ navigation, route}) {
+export default function CriarSalaCorrida({ navigation, route }) {
 
-  const {destino, destinoDois, dist} = route.params;
+  const { destino, destinoDois, dist } = route.params;
 
   const [inicio, setInicio] = useState();
   const [final, setFinal] = useState();
@@ -30,48 +30,49 @@ export default function CriarSalaCorrida({ navigation, route}) {
   const [idSala, setUser] = useState('');
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   const [dataSala, setDataSala] = useState();
   const [horaSala, setHoraSala] = useState();
   const [image, setImage] = useState('')
   const [progress, setProgress] = useState(0)
   const [nome, setNome] = useState()
-  const [idgruposala, setID]= useState(0)
- 
-useEffect(() => {
+  const [idgruposala, setID] = useState(0)
+
+  useEffect(() => {
     setInicio(destino);
     setFinal(destinoDois);
     setDistance(dist);
 
 
-verificaid()
+    verificaid()
+    nomelogado()
 
-    
-})
 
-const verificaid = async () =>{
-  console.log('entrou')
-  const salas = query(collection(db, "chats"));
-  
+  })
 
-  const querySnapshot2 = await getDocs(salas);
-  
+  const verificaid = async () => {
+    console.log('entrou')
+    const salas = query(collection(db, "chats"));
 
-  //console.log('snap',querySnapshot2.size)
-   setID(querySnapshot2.size)
-   console.log('grupoid',idgruposala+1)
-  
-}
+
+    const querySnapshot2 = await getDocs(salas);
+
+
+    //console.log('snap',querySnapshot2.size)
+    setID(querySnapshot2.size + 1)
+
+
+  }
 
   const mapChange = () => {
     navigation.navigate('MapCorrida')
-    
+
   }
 
 
-    const showdata = async() => {
-      
-      if (value != "") {
+  const showdata = async () => {
+
+    if (value != "") {
       setModalCalendarVisible(!modalCalendarVisible);
 
       var resultado = value.split(" ");
@@ -82,14 +83,14 @@ const verificaid = async () =>{
       setDataSala(dataRs);
       setHoraSala(horaRs)
 
-      } else {
+    } else {
 
-        console.log('nao deu');
-      }
-    };
+      console.log('nao deu');
+    }
+  };
 
   const handleIncrease = () => {
-    
+
     setMembros((valor) => valor + 1);
   };
 
@@ -97,11 +98,11 @@ const verificaid = async () =>{
     setMembros(membros - 1);
   };
 
-  onAuthStateChanged(auth, (user) => { 
+  onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
       setUser(user.uid)
-      setNome(user.nome)
+
 
     } else {
       console.log('ninguem logado.')
@@ -109,9 +110,27 @@ const verificaid = async () =>{
   }
   );
 
+  // verifica o nome da pessoa logada
+  async function nomelogado() {
+    const q = query(collection(db, "Perfil"), where("Id", "==", idSala));
+    const querySnapshot = await getDocs(q);
+    try {
+      querySnapshot.forEach((doc) => {
+        const dados = (doc.id, " => ", doc.data());
+        setNome(dados.nome)
+      }
+      );
+    } catch {
+      alert('error')
+    }
+  }
+  //
 
-  const handleverificacampos = async () => { 
-    
+
+
+
+  const handleverificacampos = async () => {
+
 
     if (membros === "" || descricao === "") {
       alert('Por favor verifique os campos')
@@ -128,12 +147,12 @@ const verificaid = async () =>{
         inicioPercurso: inicio,
         finalPercurso: final,
         participantes: [idSala],
-        distancia: dist,
+        distancia: distance,
         Image: image,
-       
-       
-        
-        
+
+
+
+
 
 
 
@@ -161,48 +180,49 @@ const verificaid = async () =>{
 
 
   // Imagem grupo 
-  async function pickImage (){
+  async function pickImage() {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-    
-     mediaTypes: ImagePicker.MediaTypeOptions.Images, 
+
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
-    
+
     if (!result.canceled) {
-      
-        await handlefoto(result.assets[0].uri, "image")
-      
-    }}
-    async function handlefoto(uri, fileType){
-        
-        const response = await fetch(uri)
-        const blob = await response.blob();
-        const storageRef = ref(storage, "grupo/" + new Date().getTime())
-        const uploadTask = uploadBytesResumable(storageRef, blob)
+
+      await handlefoto(result.assets[0].uri, "image")
+
+    }
+  }
+  async function handlefoto(uri, fileType) {
+
+    const response = await fetch(uri)
+    const blob = await response.blob();
+    const storageRef = ref(storage, "grupo/" + new Date().getTime())
+    const uploadTask = uploadBytesResumable(storageRef, blob)
 
 
-        uploadTask.on("state_changed",
-        (snapshot) => {
-            const progress =  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            console.log("Upload is " + progress + "% done");
-            setProgress(progress.toFixed())
-        },
-        (error) =>{
-                console.log(error)
-        },
-        () =>{
-            getDownloadURL(uploadTask.snapshot.ref).then( async(downloadURL) =>{
-                console.log("File available at", downloadURL);
-                setImage(downloadURL)
-                
-            });
-        }
-        )
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log("Upload is " + progress + "% done");
+        setProgress(progress.toFixed())
+      },
+      (error) => {
+        console.log(error)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          console.log("File available at", downloadURL);
+          setImage(downloadURL)
+
+        });
       }
+    )
+  }
 
 
 
@@ -212,159 +232,156 @@ const verificaid = async () =>{
   // criargruposala
 
 
-const criargruposala = async() =>{
-  
-  
+  const criargruposala = async () => {
 
-  try {
-      const salas = query(collection(db, "chats"));
 
-      const querySnapshot2 = await getDocs(salas);
-      setID(querySnapshot2.size)
-      
-      const docRef = doc(db,`chats/${idgruposala + 1} `);
-      console.log('entrou3')
+
+    try {
+
+
+      const docRef = doc(db, `chats/${nome + idSala + idgruposala} `);
+
       const envia = {
-          nome: nomeCorrida,
-          Image: image,
-          documentId:idgruposala + 1,
-          participantes: [idSala],
-          descricao: descricao,
-          status: "Grupos"
+        nome: nomeCorrida,
+        Image: image,
+        documentId: nome + idSala + idgruposala,
+        participantes: [idSala],
+        descricao: descricao,
+        status: "Grupos"
       };
       setDoc(docRef, envia)
 
-          .then(
-
-             
-
-             navigation.navigate("Home")
+        .then(
 
 
 
-          ).catch((error) => {
-              console.log(error)
-          })
+          navigation.navigate("Home")
 
 
-  } catch (e) {
+
+        ).catch((error) => {
+          console.log(error)
+        })
+
+
+    } catch (e) {
       console.log(e)
+    }
   }
-}
 
 
 
   //
 
   return (
-    
-    
-  <View style={styles.container}>
-    <ImageBackground style={styles.image} source={require('../img/run_background.jpg')} imageStyle={{ opacity: 0.4, }}>
-      <ScrollView>
-        <TextInput style={styles.input}
-          onChangeText={setNomeCorrida}
-          value={nomeCorrida}
-          placeholder="Nome da Sala:"
-          placeholderTextColor={'#000'}
-        />
-
-        <TextInput
-          style={styles.textArea}
-          multiline={true}
-          numberOfLines={5}
-          onChangeText={setDescricao}
-          value={descricao}
-          placeholder="Descrição:"
-          placeholderTextColor={'#000'}
-        />
-
-        <View style={styles.viewBtn}>
-          <TouchableOpacity style={styles.botao} onPress={mapChange} >
-            <Text style={styles.txtBtn}><MaterialCommunityIcons name="run" color={"#000"} size={20} /> Percurso</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botao} onPress={() => setModalCalendarVisible(true)}  >
-            <Text style={styles.txtBtn}><MaterialCommunityIcons name="calendar" color={"#000"} size={20} /> Data</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.viewBtn}>
-
-          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.botao}>
-            <Text style={styles.txtBtn}><MaterialCommunityIcons name="human" color={"#000"} size={20} /> Máx 10</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={pickImage} style={styles.botao}>
-            <Text style={styles.txtBtn}><MaterialCommunityIcons name="camera" color={"#000"} size={20} /> Imagem</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.viewBtn}>
-          <TouchableOpacity onPress={handleverificacampos} style={styles.botao}>
-            <Text style={styles.txtBtn}><MaterialCommunityIcons name="check" color={"#000"} size={20} /> Criar</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.centeredView}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={handleIncrease}>
-                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="plus-box" color={"#00bf63"} size={50} /></Text>
-                </Pressable>
-
-                <Text style={styles.txtBtn}>{membros}</Text>
 
 
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={handleDecrease}>
-                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="minus-box" color={"#00bf63"} size={50} /></Text>
-                </Pressable>
+    <View style={styles.container}>
+      <ImageBackground style={styles.image} source={require('../img/run_background.jpg')} imageStyle={{ opacity: 0.4, }}>
+        <ScrollView>
+          <TextInput style={styles.input}
+            onChangeText={setNomeCorrida}
+            value={nomeCorrida}
+            placeholder="Nome da Sala:"
+            placeholderTextColor={'#000'}
+          />
 
-                <Pressable
-                  style={styles.botao}
-                  onPress={() => setModalVisible(!modalVisible)}>
-                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
-                </Pressable>
-              </View>
-            </View>
-          </Modal>
-        </View>
-        <View style={styles.centeredView}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalCalendarVisible}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <View style={styles.containerCalendar}>
-                  <DateTimePicker
-                    locale={'pt_br'}
-                    mode={'datetime'}
-                    value={value}
-                    
-                    onValueChange={(date) => setValue(date)}
-                  />
+          <TextInput
+            style={styles.textArea}
+            multiline={true}
+            numberOfLines={5}
+            onChangeText={setDescricao}
+            value={descricao}
+            placeholder="Descrição:"
+            placeholderTextColor={'#000'}
+          />
+
+          <View style={styles.viewBtn}>
+            <TouchableOpacity style={styles.botao} onPress={mapChange} >
+              <Text style={styles.txtBtn}><MaterialCommunityIcons name="run" color={"#000"} size={20} /> Percurso</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.botao} onPress={() => setModalCalendarVisible(true)}  >
+              <Text style={styles.txtBtn}><MaterialCommunityIcons name="calendar" color={"#000"} size={20} /> Data</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.viewBtn}>
+
+            <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.botao}>
+              <Text style={styles.txtBtn}><MaterialCommunityIcons name="human" color={"#000"} size={20} /> Máx 10</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={pickImage} style={styles.botao}>
+              <Text style={styles.txtBtn}><MaterialCommunityIcons name="camera" color={"#000"} size={20} /> Imagem</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.viewBtn}>
+            <TouchableOpacity onPress={handleverificacampos} style={styles.botao}>
+              <Text style={styles.txtBtn}><MaterialCommunityIcons name="check" color={"#000"} size={20} /> Criar</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={handleIncrease}>
+                    <Text style={styles.txtBtn} ><MaterialCommunityIcons name="plus-box" color={"#00bf63"} size={50} /></Text>
+                  </Pressable>
+
+                  <Text style={styles.txtBtn}>{membros}</Text>
+
+
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={handleDecrease}>
+                    <Text style={styles.txtBtn} ><MaterialCommunityIcons name="minus-box" color={"#00bf63"} size={50} /></Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={styles.botao}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
+                  </Pressable>
                 </View>
-                <Pressable
-                  style={styles.botao}
-                  onPress={showdata}>
-                  <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
-                </Pressable>
               </View>
-            </View>
-          </Modal>
-        </View>
-      </ScrollView>
-    </ImageBackground>
-  </View>
-)
+            </Modal>
+          </View>
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalCalendarVisible}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <View style={styles.containerCalendar}>
+                    <DateTimePicker
+                      locale={'pt_br'}
+                      mode={'datetime'}
+                      value={value}
+
+                      onValueChange={(date) => setValue(date)}
+                    />
+                  </View>
+                  <Pressable
+                    style={styles.botao}
+                    onPress={showdata}>
+                    <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </View>
+  )
 };
