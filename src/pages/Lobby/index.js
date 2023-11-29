@@ -15,11 +15,26 @@ import styles from './styles';
             if (id == 2){
                 navigation.navigate("futebol")
             }else if (id ==1) {
-                navigation.navigate("CriarSalaCorrida")
+                navigation.navigate("MapCorrida")
             }else if (id ==3) {
                 navigation.navigate("academia")
             }else if (id ==4) {
                 navigation.navigate("ciclismo")
+            }
+
+    
+        };
+
+        async function SelectSala() {
+
+            if (id == 2){
+                navigation.navigate("SelectFutebol")
+            }else if (id ==1) {
+                navigation.navigate("SelectCorrida")
+            }else if (id ==3) {
+                navigation.navigate("SelectAcademia")
+            }else if (id ==4) {
+                navigation.navigate("SelectCiclismo")
             }
 
     
@@ -37,7 +52,7 @@ import styles from './styles';
                 <Text style={styles.botaoBuscarCriar}>Criar Sala</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.botao}>
+            <TouchableOpacity onPress={SelectSala} style={styles.botao}>
                 <Text style={styles.botaoBuscarCriar}>Buscar Sala</Text>
             </TouchableOpacity>
         </View>

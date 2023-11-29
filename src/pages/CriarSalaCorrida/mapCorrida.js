@@ -16,17 +16,12 @@ export default function MapCorrida({ navigation }) {
 
   //mapas
 
-  const chamaCoord = () => {
-    console.log(destination)
-    console.log(destinationTwo)
-    requestLocationPermissions();
-  }
 
   const mapEl=useRef(null);
   const [origin, setOrigin] = useState(null);
-  const [destination, setDestination] = useState(null);
-  const [destinationTwo, setDestinationTwo] = useState(null);
-  const [distancia, setDistancia] = useState(null);
+  const [destination, setDestination] = useState('');
+  const [destinationTwo, setDestinationTwo] = useState('');
+  const [distancia, setDistancia] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -36,7 +31,7 @@ export default function MapCorrida({ navigation }) {
         if(granted) {
           const currentPosition = await getCurrentPositionAsync();
           setOrigin(currentPosition);
-          console.log('CURRENT POSITION >>>>>>>> ', currentPosition);
+          
 
         }
       }
@@ -51,95 +46,103 @@ export default function MapCorrida({ navigation }) {
 
     return (
 
-        <View style={styles.mapContainer}>
+      <View style={styles.mapContainer}>
 
-            {
-                origin &&
-                <MapView
-                        style={styles.map}
-                        initialRegion={{
-                        latitude: origin.coords.latitude,
-                        longitude: origin.coords.longitude,
-                        latitudeDelta: 0.005,
-                        longitudeDelta: 0.005
-                    }}
-                    showsUserLocation={true}
-                    loadingEnabled={true}
-                    ref={mapEl}
-                >
-                    {destination &&
-                        <MapViewDirections
-                            origin={destination}
-                            destination={destinationTwo}
-                            apikey="AIzaSyBGnMA5jW1v-LfSfsRUS7YUjkTFvqz5H4A"
-                            strokeWidth={4}
-                            strokeColor="green"
-                            onReady={resultado => {
-                                setDistancia(resultado.distance),
-                                
-                                mapEl.current.fitToCoordinates(
-                                    
-                                    resultado.coordinates,{
-                                        edgePadding:{
-                                            top:50,
-                                            bottom:50,
-                                            left:50,
-                                            right: 50
-                                        }
-                                    }
-                                )
-                                
-                                setModalVisible(true)
-                            }}
-                        />
+        {
+          origin &&
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: origin.coords.latitude,
+              longitude: origin.coords.longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005
+            }}
+            showsUserLocation={true}
+            loadingEnabled={true}
+            ref={mapEl}
+          >
+            {destination &&
+              <MapViewDirections
+                origin={destination}
+                destination={destinationTwo}
+                apikey="AIzaSyBGnMA5jW1v-LfSfsRUS7YUjkTFvqz5H4A"
+                strokeWidth={4}
+                strokeColor="green"
+                onReady={resultado => {
+                  setDistancia(resultado.distance),
+
+                    mapEl.current.fitToCoordinates(
+
+                      resultado.coordinates, {
+                      edgePadding: {
+                        top: 50,
+                        bottom: 50,
+                        left: 50,
+                        right: 50
+                      }
                     }
+                    )
 
-                </MapView>
+                  setModalVisible(true)
+                }}
+              />
             }
-<View style={styles.search}>
 
-            <GooglePlacesAutocomplete 
-                placeholder='Para onde vamos?'
-                onPress={(data, details = null) => {
-                    setDestination({
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng,
-                        latitudeDelta: 0.000922,
-                        longitudeDelta: 0.000421
-                    });
-                }}
-                query={{
-                    key: 'AIzaSyBGnMA5jW1v-LfSfsRUS7YUjkTFvqz5H4A',
-                    language: 'pt-br',
-                    components: 'country:br'
-                }}
-                enablePoweredByContainer={false}
-                fetchDetails={true}
-                styles={{ listView: { height: 100 } }}
-            />
-            
-            <GooglePlacesAutocomplete
-                placeholder='Para onde vamos?'
-                onPress={(data, details = null) => {
-                    setDestinationTwo({
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng,
-                        latitudeDelta: 0.000922,
-                        longitudeDelta: 0.000421
-                    });
-                }}
-                query={{
-                    key: 'AIzaSyBGnMA5jW1v-LfSfsRUS7YUjkTFvqz5H4A',
-                    language: 'pt-br',
-                    components: 'country:br'
-                }}
-                enablePoweredByContainer={false}
-                fetchDetails={true}
-                styles={{ listView: { height: 100 } }}
-            />
-            </View>
+          </MapView>
+        }
+        <View style={styles.search}>
 
-            <View style={styles.centeredView}>
+          <GooglePlacesAutocomplete
+            placeholder='Para onde vamos?'
+            onPress={(data, details = null) => {
+              setDestination({
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+                latitudeDelta: 0.000922,
+                longitudeDelta: 0.000421
+              });
+            }}
+            query={{
+              key: 'AIzaSyBGnMA5jW1v-LfSfsRUS7YUjkTFvqz5H4A',
+              language: 'pt-br',
+              components: 'country:br'
+            }}
+            enablePoweredByContainer={false}
+            fetchDetails={true}
+            styles={{ listView: { height: 100 } }}
+          />
+
+          <GooglePlacesAutocomplete
+            placeholder='Para onde vamos?'
+            onPress={(data, details = null) => {
+              setDestinationTwo({
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+                latitudeDelta: 0.000922,
+                longitudeDelta: 0.000421
+              });
+            }}
+            query={{
+              key: 'AIzaSyBGnMA5jW1v-LfSfsRUS7YUjkTFvqz5H4A',
+              language: 'pt-br',
+              components: 'country:br'
+            }}
+            enablePoweredByContainer={false}
+            fetchDetails={true}
+            styles={{ listView: { height: 100 } }}
+          />
+        </View>
+        <View style={{marginBottom: 50, alignItems: 'center'}}>
+        <Pressable
+          style={styles.botao}
+          onPress={() => navigation.navigate("CriarSalaCorrida", { destino: destination, destinoDois:destinationTwo, dist:distancia})}
+        >
+          <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
+        </Pressable>
+        </View>
+
+        <View style={styles.centeredView}>
           <Modal
             animationType="slide"
             transparent={true}
@@ -159,9 +162,7 @@ export default function MapCorrida({ navigation }) {
             </View>
           </Modal>
         </View>
-
-            <Button onPress={chamaCoord} title="press"></Button>
-        </View>
+      </View>
 
     )
 };

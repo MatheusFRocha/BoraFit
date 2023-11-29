@@ -10,10 +10,48 @@ const styles = StyleSheet.create({
     },
     map: {
         height: '50%'
+        
     },
+    mapStyle: {
+    
+        flex: 1,
+    
+    
+
+    },
+
     image: {
         flex:1,
         justifyContent:'center'
+    },
+    title:{
+        marginTop: 15,
+        paddingBottom:10,
+        fontSize:25,
+        textAlign:'center',
+        color: 'green'
+    },titleSala:{
+        alignItems: 'center',
+        marginTop:10,
+        backgroundColor: '#00bf6370',
+        padding: 10,
+        marginHorizontal: 16,
+        borderRadius: 20
+    },
+    titleLists:{
+        marginTop: 25,
+        paddingBottom:10,
+        fontSize:25,
+        textAlign:'center',
+        color: 'green'
+    },
+    listaSala: {
+        alignItems: 'center',
+
+        backgroundColor: '#00bf6370',
+        padding: 20,
+        marginHorizontal: 16,
+
     },
     input: {
         marginLeft: 'auto',
