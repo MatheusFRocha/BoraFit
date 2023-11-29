@@ -18,7 +18,7 @@ const style = StyleSheet.create({
       borderWidth: 1,
       height: '10%',
       borderColor:'#00FF47',
-      
+      marginTop: 7
       
 
     },
@@ -27,6 +27,7 @@ const style = StyleSheet.create({
      padding: 15,
      flexDirection: 'row',
      gap: 130,
+     
      
      
     },

@@ -201,7 +201,11 @@ export default function App() {
 
 
         <Stack.Screen
-          
+           options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
           name="Mensagens"
           component={Mensagens}
 
