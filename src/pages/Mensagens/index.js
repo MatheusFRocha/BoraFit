@@ -158,6 +158,8 @@ const Mensagens = ({ navigation }) => {
         const querySnapshot2 = await getDocs(salas);
         if (querySnapshot2.size != 0) {
             setID(querySnapshot2.size)
+        }else{
+            setID(0)
         }
 
         //

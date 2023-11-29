@@ -29,14 +29,14 @@ const Pessoa = ({ navigation, route }) => {
   const [pessoasnogrupo, setPessoasNoGrupo] = useState([])
 
 
-  const m = query(collection(db, `chats/${idsala}/messages`));
+ 
 
   useLayoutEffect(() => {
     const m = query(collection(db, `chats/${idsala}/messages`));
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
-        setUser(user.uid)
+        setUser(uid)
 
 
       } else {
@@ -50,7 +50,7 @@ const Pessoa = ({ navigation, route }) => {
     nomehandle();
     mensagens();
     verificamembros()
-
+   
 
   })
 
@@ -133,14 +133,17 @@ const Pessoa = ({ navigation, route }) => {
 
   }
   const saiirgrupo = async () => {
+   
     const tirar = pessoasnogrupo.filter(pessoa => pessoa != `${userlog}`)
     const docRef = doc(db, "chats", idsala);
-
+  
+    
     const envia = {
         participantes: tirar,
        
         
     };
+    console.log('1')
     setDoc(docRef, envia)
 
         .then(
@@ -231,6 +234,7 @@ const Pessoa = ({ navigation, route }) => {
 
 
 
+export default Pessoa
       <View style={style.input}>
         <TextInput style={style.text}
           placeholder='escreva uma mensagem'
