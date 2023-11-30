@@ -29,6 +29,7 @@ import MapCorrida from './src/pages/CriarSalaCorrida/mapCorrida'
 import Academia from './src/pages/CriarSala/academia';
 import Futebol from './src/pages/CriarSala/futebol';
 import Ciclismo from './src/pages/CriarSala/ciclismo';
+import MapCiclismo from './src/pages/CriarSala/mapCiclismo';
 
 
 
@@ -88,6 +89,17 @@ export default function App() {
           }}
           name="MapCorrida"
           component={MapCorrida}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="MapCiclismo"
+          component={MapCiclismo}
 
         />
 

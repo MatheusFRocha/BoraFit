@@ -11,7 +11,7 @@ import { db } from '../../config/firebase';
 import { Button } from "react-native";
 
 
-
+//nao usada mais
 
 export default function CriarSalaCorrida({ navigation }) {
 

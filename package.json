@@ -55,7 +55,6 @@
     "react-native-ui-datepicker": "^1.0.9",
     "react-navigation": "^4.4.4",
     "sequelize": "^6.30.0",
-    "typescript": "^5.2.2",
     "yet": "^0.1.0"
   },
   "devDependencies": {
