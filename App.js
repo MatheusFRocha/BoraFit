@@ -30,7 +30,9 @@ import Academia from './src/pages/CriarSala/academia';
 import Futebol from './src/pages/CriarSala/futebol';
 import Ciclismo from './src/pages/CriarSala/ciclismo';
 import SelectCorrida from './src/pages/SelectSala/SelectCorrida';
+import SelectCiclismo from './src/pages/SelectSala/SelectCiclismo';
 import SalaSelecionada from './src/pages/SelectSala/SalaSelecionada';
+import MapCiclismo from './src/pages/CriarSala/MapCiclismo';
 
 
 
@@ -99,6 +101,17 @@ export default function App() {
             headerTransparent: true,
             headerShown: false,
           }}
+          name="SelectCiclismo"
+          component={SelectCiclismo}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
           name="SalaSelecionada"
           component={SalaSelecionada}
 
@@ -112,6 +125,17 @@ export default function App() {
           }}
           name="MapCorrida"
           component={MapCorrida}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="MapCiclismo"
+          component={MapCiclismo}
 
         />
 
