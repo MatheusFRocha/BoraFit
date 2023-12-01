@@ -15,7 +15,7 @@ import { collection, query, where, getDocs, doc, setDoc, onSnapshot, updateDoc, 
 
 export default function SalaSelecionada({ navigation, route }) {
 
-    const { esporte, distancia, descricao, origin, destination, nomeCorrida, dataGrupo, horaGrupo, membros, participantes } = route.params;
+    const { documentId, esporte, distancia, descricao, origin, destination, nomeCorrida, dataGrupo, horaGrupo, membros, participantes } = route.params;
     const [dest, setDest] = useState();
     const [orig, setOrig] = useState();
     const [dataSala, setDataSala] = useState();
@@ -25,6 +25,7 @@ export default function SalaSelecionada({ navigation, route }) {
     const auth = getAuth();
     const a = auth.currentUser.uid;
 
+    console.log(documentId)
 
 
     
@@ -51,6 +52,9 @@ export default function SalaSelecionada({ navigation, route }) {
             part.push(a)
             const colec = doc(db, "Salas", "corrida", "sala", nomeCorrida)
             updateDoc(colec, {participantes: arrayUnion(a)}).then(alert('Você está participando da sala!'))
+
+            const ref = query(collection(db, "chats"), where('documentId', '==', documentId));
+            updateDoc(ref, {participantes: arrayUnion(a)})
 
             
             navigation.navigate("Home");

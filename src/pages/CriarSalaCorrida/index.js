@@ -149,7 +149,8 @@ export default function CriarSalaCorrida({ navigation, route }) {
         participantes: [idSala],
         distancia: distance,
         Image: image,
-        esporte: idEsporte
+        esporte: idEsporte,
+        documentId: idSala + idgruposala
 
 
 
@@ -240,12 +241,12 @@ export default function CriarSalaCorrida({ navigation, route }) {
     try {
 
 
-      const docRef = doc(db, `chats/${nome + idSala + idgruposala} `);
+      const docRef = doc(db, `chats/${idSala + idgruposala} `);
 
       const envia = {
         nome: nomeCorrida,
         Image: image,
-        documentId: nome + idSala + idgruposala,
+        documentId: idSala + idgruposala,
         participantes: [idSala],
         descricao: descricao,
         status: "Grupos"
