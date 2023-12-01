@@ -17,7 +17,7 @@ export default function SelectCorrida({ navigation }) {
 
     async function Corridas() {
 
-        const colecao = query(collection(db, "Salas", "corrida", "sala"), where('participantes', '!=', a));
+        const colecao = query(collection(db, "Salas", "corrida", "sala"), where('criador', '!=', a));
         const querySnapshotteste = await getDocs(colecao)
         const list = []
 
@@ -25,7 +25,7 @@ export default function SelectCorrida({ navigation }) {
             list.push({ ...doc.data(), id: doc.id })
         })
         setCorridas(list)
-        console.log(list)
+        
 
 
     }
@@ -55,7 +55,7 @@ export default function SelectCorrida({ navigation }) {
                     renderItem={({ item }) =>
                         <SafeAreaView>
 
-                            <TouchableOpacity style={styles.listaSala} onPress={() => navigation.navigate("SalaSelecionada",{nomeCorrida:item.nomeCorrida, descricao:item.descricao, origin:[item.inicioPercurso.latitude, item.inicioPercurso.longitude], destination:[item.finalPercurso.latitude, item.finalPercurso.longitude], dataGrupo: item.dataGrupo, horaGrupo: item.horaGrupo, membros: item.membros, participantes: item.participantes, distancia:item.distancia})}>
+                            <TouchableOpacity style={styles.listaSala} onPress={() => navigation.navigate("SalaSelecionada",{esporte: item.esporte, nomeCorrida:item.nomeCorrida, descricao:item.descricao, origin:[item.inicioPercurso.latitude, item.inicioPercurso.longitude], destination:[item.finalPercurso.latitude, item.finalPercurso.longitude], dataGrupo: item.dataGrupo, horaGrupo: item.horaGrupo, membros: item.membros, participantes: item.participantes, distancia:item.distancia})}>
 
                                 <Text style={styles.txtBtn}>{item.nomeCorrida}</Text>
 

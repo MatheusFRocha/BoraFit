@@ -1,23 +1,91 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Modal, Pressable, View, Text, FlatList, ImageBackground } from 'react-native';
+import { View, Text, Pressable, Modal } from 'react-native';
 import styles from './styles';
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { db, storage } from '../../config/firebase';
-import { collection, query, where, getDocs, doc, setDoc, onSnapshot } from "firebase/firestore";
-import { SafeAreaView } from 'react-native-safe-area-context';
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from '../../config/firebase';
+import { collection, query, where, getDocs, doc, setDoc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
+
+
+
+
+
 
 
 export default function SalaSelecionada({ navigation, route }) {
 
-    const { distancia, descricao, origin, destination, nomeCorrida, nomeCiclismo, dataGrupo, horaGrupo, membros, participantes } = route.params;
+    const { esporte, distancia, descricao, origin, destination, nomeCorrida, dataGrupo, horaGrupo, membros, participantes } = route.params;
     const [dest, setDest] = useState();
     const [orig, setOrig] = useState();
     const [dataSala, setDataSala] = useState();
     const [qtdPessoas, setQtdPessoas] = useState();
+    const [part, setPart] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const auth = getAuth();
+    const a = auth.currentUser.uid;
+
+
+
+    
+
+
+    const incluirParticipante = async() => {
+        
+
+            const colecao = query(collection(db, "Salas", "corrida", "sala"), where ('nomeCorrida', '==', nomeCorrida));
+            const querySnapshotteste = await getDocs(colecao)
+            const list = []
+    
+            querySnapshotteste.forEach((doc) => {
+                list.push({ ...doc.data(), id: doc.id })
+            })
+            
+
+            querySnapshotteste.forEach((doc) => {
+                const dados = (doc.id, '=>', doc.data());
+                setPart(dados.participantes)
+               
+            });
+
+            part.push(a)
+            const colec = doc(db, "Salas", "corrida", "sala", nomeCorrida)
+            updateDoc(colec, {participantes: arrayUnion(a)}).then(alert('Você está participando da sala!'))
+
+            
+            navigation.navigate("Home");
+    
+    
+      
+
+        /*if (usuario == "") {
+            alert('Ninguém logado!')
+          } else {
+      
+            const docRef = doc(db, "Salas", esporte ,"sala", nomeCorrida);
+            const envia = {
+
+              participantes: [usuario]
+
+            };
+      
+            setDoc(docRef, envia)
+      
+              .then(
+      
+                alert('Agora você faz parte desta sala de atividade!')
+      
+      
+              ).catch((error) => {
+                setErrorLogin(true)
+                let errorCode = error.code;
+                let errorMassage = error.message;
+              })
+        }*/
+    }
+
+    
+
 
     const contaPessoas = () => {
         const contaP = participantes.length;
@@ -25,18 +93,19 @@ export default function SalaSelecionada({ navigation, route }) {
     }
 
     const trocaData = () => {
-      
-            var resultado = dataGrupo.split("-");
-      
-            var dataformatada = resultado[2] + "/" + resultado[1] + "/" + resultado[0];
-            
-      
-            setDataSala(dataformatada);
-            
-            
-        }
+
+        var resultado = dataGrupo.split("-");
+
+        var dataformatada = resultado[2] + "/" + resultado[1] + "/" + resultado[0];
+
+
+        setDataSala(dataformatada);
+
+
+    }
 
     useEffect(() => {
+        
         setDest({
             latitude: destination[0],
             longitude: destination[1]
@@ -49,7 +118,13 @@ export default function SalaSelecionada({ navigation, route }) {
         contaPessoas();
         
         
-    }, []);
+      
+        
+
+        
+
+
+    },[]);
 
     const mapEl = useRef(null);
 
@@ -104,19 +179,68 @@ export default function SalaSelecionada({ navigation, route }) {
 
             </MapView>
             <View style={styles.titleSala}>
-                <Text style={styles.txtBtn}>Percurso: {nomeCorrida}{nomeCiclismo}</Text>
+                <Text style={styles.txtBtn}>Percurso: {nomeCorrida}</Text>
                 <Text style={styles.txtBtn}>Data: {dataSala} às {horaGrupo}</Text>
                 <Text style={styles.txtBtn}>Participantes: {qtdPessoas} / {membros}</Text>
                 <Text style={styles.txtBtn}>Distância: {distancia} M</Text>
-            
+
+            </View>
+            <View style={styles.viewBtn}>
+                <Pressable
+                    style={styles.botao}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.txtBtn} >Descrição</Text>
+                </Pressable>
+
+
+            </View>
+            {qtdPessoas < membros ?
+                <View style={styles.viewBtn}>
+
+                    <Pressable
+                        style={styles.botao}
+                        onPress={incluirParticipante}>
+                        <Text style={styles.txtBtn} >Participar</Text>
+                    </Pressable>
+                </View>
+                : <>
+                    <View style={styles.viewBtn}>
+                        <Text style={styles.txtBtn}>Sala Cheia!</Text>
+
+                    </View>
+                    <View style={styles.viewBtn}>
+
+                        <Text style={styles.txtBtn}>Não é mais possível participar!</Text>
+                    </View>
+                </>
+            }
+            <View style={styles.centeredView}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+
+                            <Text style={styles.txtBtn}>{descricao}</Text>
+
+                            <Pressable
+                                style={styles.botao}
+                                onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles.txtBtn} >Ok</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </View>
-                
-              
-                
-                
 
-                
+
+
+
+
+
 
 
     )
