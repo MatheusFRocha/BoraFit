@@ -3,7 +3,9 @@
 import { StyleSheet } from "react-native";
 const style = StyleSheet.create({
 
-   
+   container:{
+    flex:1
+   },
     background: {
         flex: 1,
         justifyContent: 'center',
@@ -12,28 +14,28 @@ const style = StyleSheet.create({
     },
     header:{
       
-      alignItems: 'center',
-      backgroundColor:'#7B7B7B',
-      justifyContent: 'center',
-      borderWidth: 1,
-      height: '10%',
-      borderColor:'#00FF47',
-      marginTop: 7
+      flexDirection:'row',
+      justifyContent:'center',
+      alignItems:'center',
+
+      
       
 
     },
     headercontent:{
-     alignItems:'center',
-     padding: 15,
-     flexDirection: 'row',
-     gap: 130,
-     
-     
+    alignItems:'center',
+    justifyContent:'space-between',
+    backgroundColor:"#ddd",
+    height:100,
+    flexDirection:'row',
+    maxWidth: '100%',
+  
      
     },
     mens: {
         backgroundColor:'#D9D9D9',
         height: '83%',
+  
 
     },
     input: {
@@ -66,6 +68,7 @@ const style = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         gap:30
+     
         
         
     },
@@ -78,19 +81,49 @@ const style = StyleSheet.create({
     },
     otherMessageContainer:{
         backgroundColor:'#fff',
-        alignSelf:'flex-end'
+        
     },
     userMessageContainer:{
-        backgroundColor:'#dcf8c6'
+        backgroundColor:'#dcf8c6',
+        alignSelf:'flex-end'
     },
     messagetext:{
         fontSize:16,
+        
 
     },
     time:{
         fontSize:12,
         color:'#777',
-        alignSelf:'flex-end'
+        alignSelf:'flex-end',
+       
+    },
+    infomsg:{
+        fontSize:12,
+        color:'#777',
+        flexDirection:'row'
+
+    },
+    inputContainer:{
+        flexDirection:'row',
+        padding:10,
+        gap:10,
+        backgroundColor: '#fff'
+    },
+    messageInput:{
+        flex: 1,
+        backgroundColor:'white',
+        borderColor:'#ddd',
+        borderWidth:1,
+        borderRadius:10,
+        padding:3
+
+    },
+    img:{
+        width: 88,
+        height: 50,
+        width: 50,
+        borderRadius: 25,
     }
     
    

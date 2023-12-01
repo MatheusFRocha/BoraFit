@@ -8,6 +8,8 @@ container:{
     width: '100%',
     marginLeft:10,
     marginTop:50,
+    flexDirection:'row',
+    
    
 
 
@@ -73,12 +75,15 @@ icone:{
 
 card:{
     padding:20,
-    height:120,
+    width: '100%',
     backgroundColor:'#fff',
     marginBottom:10,
+    elevation:4,
     flexDirection:'row',
-    alignItems:'center',
-    gap:30
+    alignItems: 'center',
+    
+    
+   
     
     
 },
@@ -109,6 +114,14 @@ secondary:{
     alignSelf:'flex-end'
     //elevation:5
 
+}, img:{
+    width: 88,
+    height: 50,
+    width: 50,
+    borderRadius: 100,
+
+},texto:{
+    marginLeft:10
 }
 
 
