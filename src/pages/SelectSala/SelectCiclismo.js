@@ -13,7 +13,8 @@ export default function SelectCiclismo({ navigation }) {
     const auth = getAuth();
     const a = auth.currentUser.uid;
     const [modalVisible, setModalVisible] = useState(false);
-    const [cicles, setCicles] = useState()
+    const [cicles, setCicles] = useState();
+    //const [refCicle, setRefClicle] = useState();
 
     async function Ciclismos() {
 
@@ -25,7 +26,7 @@ export default function SelectCiclismo({ navigation }) {
             list.push({ ...doc.data(), id: doc.id })
         })
         setCicles(list)
-        console.log(list)
+        
 
 
     }
@@ -34,6 +35,7 @@ export default function SelectCiclismo({ navigation }) {
 
 
         Ciclismos()
+       
 
 
 

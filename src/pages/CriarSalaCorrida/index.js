@@ -30,7 +30,7 @@ export default function CriarSalaCorrida({ navigation, route }) {
   const [idSala, setUser] = useState('');
   const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const idEsporte = 'corrida';
   const [dataSala, setDataSala] = useState();
   const [horaSala, setHoraSala] = useState();
   const [image, setImage] = useState('')
@@ -149,6 +149,7 @@ export default function CriarSalaCorrida({ navigation, route }) {
         participantes: [idSala],
         distancia: distance,
         Image: image,
+        esporte: idEsporte
 
 
 
