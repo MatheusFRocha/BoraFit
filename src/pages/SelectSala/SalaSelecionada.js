@@ -13,7 +13,7 @@ import MapViewDirections from 'react-native-maps-directions';
 
 export default function SalaSelecionada({ navigation, route }) {
 
-    const { distancia, descricao, origin, destination, nomeCorrida, dataGrupo, horaGrupo, membros, participantes } = route.params;
+    const { distancia, descricao, origin, destination, nomeCorrida, nomeCiclismo, dataGrupo, horaGrupo, membros, participantes } = route.params;
     const [dest, setDest] = useState();
     const [orig, setOrig] = useState();
     const [dataSala, setDataSala] = useState();
@@ -104,7 +104,7 @@ export default function SalaSelecionada({ navigation, route }) {
 
             </MapView>
             <View style={styles.titleSala}>
-                <Text style={styles.txtBtn}>Percurso: {nomeCorrida}</Text>
+                <Text style={styles.txtBtn}>Percurso: {nomeCorrida}{nomeCiclismo}</Text>
                 <Text style={styles.txtBtn}>Data: {dataSala} às {horaGrupo}</Text>
                 <Text style={styles.txtBtn}>Participantes: {qtdPessoas} / {membros}</Text>
                 <Text style={styles.txtBtn}>Distância: {distancia} M</Text>

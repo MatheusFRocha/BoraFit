@@ -5,6 +5,12 @@ const styles = StyleSheet.create({
     container: {
         flex:1
     },
+    mapContainer: {
+        flex:1
+    },
+    map: {
+        height: '50%'
+    },
     image: {
         flex:1,
         justifyContent:'center'
@@ -19,6 +25,11 @@ const styles = StyleSheet.create({
         borderBottomColor: "#00bf63"
 
     },
+    search: {
+        backgroundColor: '#3CB371',
+        height: '40%'
+    },
+   
     textArea: {
         marginTop: 25,
         width: '85%',
@@ -54,6 +65,24 @@ const styles = StyleSheet.create({
     viewBtn: {
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
     }
 
 });

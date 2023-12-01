@@ -19,7 +19,7 @@ import styles from './styles';
             }else if (id ==3) {
                 navigation.navigate("academia")
             }else if (id ==4) {
-                navigation.navigate("ciclismo")
+                navigation.navigate("MapCiclismo")
             }
 
     
