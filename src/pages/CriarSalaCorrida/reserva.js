@@ -15,7 +15,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { collecion, where, query, getDocs, onSnapshot, DocumentData } from "firebase/firestore";
 
 
-export default function CriarSalaCorrida({ navigation, route }) {
+export default function reserva({ navigation, route }) {
 
   const { destino, destinoDois, dist } = route.params;
 
@@ -136,7 +136,7 @@ export default function CriarSalaCorrida({ navigation, route }) {
       alert('Por favor verifique os campos')
     } else {
 
-      const docRef = doc(db, "Salas", "corrida", "sala", nomeCorrida);
+      const docRef = doc(db, "Salas", "corrida", "sala", idSala);
       const envia = {
         descricao: descricao,
         nomeCorrida: nomeCorrida,
@@ -149,7 +149,8 @@ export default function CriarSalaCorrida({ navigation, route }) {
         participantes: [idSala],
         distancia: distance,
         Image: image,
-        esporte: idEsporte
+        esporte: idEsporte,
+        documentId:"IdNwpzhomoOJlIsuB4FfepMoAYP21"
 
 
 
@@ -240,12 +241,12 @@ export default function CriarSalaCorrida({ navigation, route }) {
     try {
 
 
-      const docRef = doc(db, `chats/${nome + idSala + idgruposala} `);
+      const docRef = doc(db, `chats/${idSala + idgruposala} `);
 
       const envia = {
         nome: nomeCorrida,
         Image: image,
-        documentId: nome + idSala + idgruposala,
+        documentId:  idSala + idgruposala,
         participantes: [idSala],
         descricao: descricao,
         status: "Grupos"

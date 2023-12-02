@@ -5,57 +5,96 @@ import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from '../../config/firebase';
-import { collection, query, where, getDocs, doc, setDoc, add, onSnapshot, updateDoc, arrayUnion, addDoc } from "firebase/firestore";
-import { fires } from 'firebase/firestore';
-import { async } from '@firebase/util';
+import { collection, query, where, getDocs, doc, setDoc, onSnapshot, updateDoc, arrayUnion, addDoc, documentId } from "firebase/firestore";
+import { number } from 'react-admin';
+import Home from '../Home';
 
 
 
 
 
 
-export default function reserva({ navigation, route }) {
 
-    const { documentId, esporte, distancia, descricao, origin, destination, nomeCorrida, dataGrupo, horaGrupo, membros, participantes } = route.params;
-    const [dest, setDest] = useState();
-    const [orig, setOrig] = useState();
-    const [dataSala, setDataSala] = useState();
-    const [qtdPessoas, setQtdPessoas] = useState();
+
+export default function SalaSelecionada({ navigation, route }) {
+
+    const { documentooo, inicio, imagems, final, participantes, distancia, esporte, nomeCorrida, descricao, dataGrupo, horaSala, origin, destination, horaGrupo, membros } = route.params;
+    const [dest, setDest] = useState([]);
+    const [orig, setOrig] = useState([]);
+    const [dataSala, setDataSala] = useState('');
+    const [qtdPessoas, setQtdPessoas] = useState<number>();
     const [part, setPart] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [teste, setTeste] = useState('')
+    const [idsalassss, setIdsalas] = useState('')
     const auth = getAuth();
     const a = auth.currentUser.uid;
 
 
+
     const [document, setDocument] = useState()
 
-useEffect(() =>{
+    useEffect(() => {
 
-    contaPessoas()
-})
+        leridsala();
+        lerid();
 
+        contaPessoas();
+    })
+
+    async function lerid() {
+        const q = query(collection(db, "chats"), where("dcid", "==", documentooo));
+
+
+        const querySnapshot = await getDocs(q);
+
+        try {
+            querySnapshot.forEach((doc) => {
+
+                const dados = (doc.id, " => ", doc.data());
+
+                setTeste(doc.id)
+
+            }
+
+            );
+        } catch {
+            alert('error')
+        }
+    }
+
+    async function leridsala() {
+        const q = query(collection(db, "Salas", "corrida", "sala"), where("doc", "==", documentooo));
+
+
+        const querySnapshot = await getDocs(q);
+
+        try {
+            querySnapshot.forEach((doc) => {
+
+                const dados = (doc.id, " => ", doc.data());
+
+                setIdsalas(doc.id)
+
+            }
+
+            );
+        } catch {
+            alert('error')
+        }
+    }
+    async function verifica() {
+        contaPessoas();
+        console.log(qtdPessoas)
+        if (qtdPessoas > membros) {
+            alert('não foi possivel entrar, a sala está cheia'), navigation.navigate("Home")
+        } else {
+            envia(), alert('você se cadastrou com sucesso, acesse a aba "mensagens" para poder conversar com os demais membros da atividade'), navigation.navigate("Home")
+
+        }
+    }
 
     const incluirParticipante = async () => {
-
-
-        const colecao = query(collection(db, "Salas", "corrida", "sala"), where('nomeCorrida', '==', nomeCorrida));
-        const querySnapshotteste = await getDocs(colecao)
-        const list = []
-
-        querySnapshotteste.forEach((doc) => {
-            list.push({ ...doc.data(), id: doc.id })
-        })
-
-
-        querySnapshotteste.forEach((doc) => {
-            const dados = (doc.id, '=>', doc.data());
-            setPart(dados.participantes)
-            setDocument(dados.documentId)
-
-
-
-
-        });
 
 
 
@@ -64,12 +103,7 @@ useEffect(() =>{
 
 
 
-
-
-        envia()
-        contaPessoas;
-
-navigation.navigate("Home")
+        //////
 
 
 
@@ -79,54 +113,38 @@ navigation.navigate("Home")
 
 
 
+        verifica();
+        inseresala();
+        envia();
 
 
 
 
 
-
-
-
-
-        /*if (usuario == "") {
-            alert('Ninguém logado!')
-          } else {
-      
-            const docRef = doc(db, "Salas", esporte ,"sala", nomeCorrida);
-            const envia = {
-
-              participantes: [usuario]
-
-            };
-      
-            setDoc(docRef, envia)
-      
-              .then(
-      
-                alert('Agora você faz parte desta sala de atividade!')
-      
-      
-              ).catch((error) => {
-                setErrorLogin(true)
-                let errorCode = error.code;
-                let errorMassage = error.message;
-              })
-        }*/
     }
 
 
 
     const envia = async () => {
-        const teste = doc(db,"Salas", "corrida","sala", documentId)
-      await updateDoc(teste,{
-        participantes: arrayUnion('a')
-      })
+        const testess = doc(db, "Salas", "corrida", "sala", idsalassss)
+
+        await updateDoc(testess, {
+            participantes: arrayUnion(a)
+        })
+    }
+
+    const inseresala = async () => {
+        const washingtonRef = doc(db, `chats/${teste}`);
+        await updateDoc(washingtonRef, {
+            participantes: arrayUnion(a)
+        });
     }
 
 
 
 
-    const contaPessoas = async() => {
+
+    const contaPessoas = async () => {
         const colecao = query(collection(db, "Salas", "corrida", "sala"), where('nomeCorrida', '==', nomeCorrida));
         const querySnapshotteste = await getDocs(colecao)
         const list = []
@@ -139,16 +157,18 @@ navigation.navigate("Home")
         querySnapshotteste.forEach((doc) => {
             const dados = (doc.id, '=>', doc.data());
             setPart(dados.participantes)
-            
+            const contaP = participantes.length;
+            setQtdPessoas(contaP);
+
 
 
 
 
         });
 
-        const contaP = participantes.length;
-        setQtdPessoas(contaP);
-      
+
+
+
 
     }
 
@@ -159,7 +179,7 @@ navigation.navigate("Home")
 
         var resultado = dataGrupo.split("-");
 
-        var dataformatada = resultado[2] + "/" + resultado[1] + "/" + resultado[0];
+        var dataformatada: string = resultado[2] + "/" + resultado[1] + "/" + resultado[0];
 
 
         setDataSala(dataformatada);
@@ -168,17 +188,11 @@ navigation.navigate("Home")
     }
 
     useEffect(() => {
-
-        setDest({
-            latitude: destination[0],
-            longitude: destination[1]
-        });
-        setOrig({
-            latitude: origin[0],
-            longitude: origin[1]
-        });
+        // {latitude:String = destination[0]}  {longitude:String = destination[1]}
+        setDest([destination.latitude, destination.longitude]);
+        setOrig([origin.latitude, origin.longitude]);
         trocaData();
-      
+
 
 
 
@@ -209,8 +223,8 @@ navigation.navigate("Home")
             >
 
                 <MapViewDirections
-                    origin={orig}
-                    destination={dest}
+                    origin={orig[0]}
+                    destination={dest[0]}
                     apikey="AIzaSyBGnMA5jW1v-LfSfsRUS7YUjkTFvqz5H4A"
                     strokeWidth={4}
                     strokeColor="green"
