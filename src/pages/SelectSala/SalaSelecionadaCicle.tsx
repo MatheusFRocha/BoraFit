@@ -16,11 +16,11 @@ import Home from '../Home';
 
 
 
-export default function SalaSelecionada({ navigation, route }) {
+export default function SalaSelecionadaCicle({ navigation, route }) {
 
-    const { documentooo, inicio, imagems, final, participantes, distancia, esporte, nomeCorrida, descricao, dataGrupo, horaSala, origin, destination, horaGrupo, membros } = route.params;
-    const [dest, setDest] = useState('');
-    const [orig, setOrig] = useState('');
+    const { documentooo, inicio, imagems, final, participantes, distancia, esporte, nomeCiclismo, descricao, dataGrupo, horaSala, origin, destination, horaGrupo, membros } = route.params;
+    const [dest, setDest] = useState([]);
+    const [orig, setOrig] = useState([]);
     const [dataSala, setDataSala] = useState('');
     const [qtdPessoas, setQtdPessoas] = useState<number>();
     const [part, setPart] = useState([]);
@@ -30,12 +30,17 @@ export default function SalaSelecionada({ navigation, route }) {
     const auth = getAuth();
     const a = auth.currentUser.uid;
 
+    const mudaTipo = () => {
+        var tipoDest = destination.toString()
+        console.log(tipoDest)
+    }
+
+
 
 
     const [document, setDocument] = useState()
 
     useEffect(() => {
-
 
         leridsala();
         lerid();
@@ -65,7 +70,7 @@ export default function SalaSelecionada({ navigation, route }) {
     }
 
     async function leridsala() {
-        const q = query(collection(db, "Salas", "corrida", "sala"), where("doc", "==", documentooo));
+        const q = query(collection(db, "Salas", "ciclismo", "sala"), where("doc", "==", documentooo));
 
 
         const querySnapshot = await getDocs(q);
@@ -127,7 +132,7 @@ export default function SalaSelecionada({ navigation, route }) {
 
 
     const envia = async () => {
-        const testess = doc(db, "Salas", "corrida", "sala", idsalassss)
+        const testess = doc(db, "Salas", "ciclismo", "sala", idsalassss)
 
         await updateDoc(testess, {
             participantes: arrayUnion(a)
@@ -146,7 +151,7 @@ export default function SalaSelecionada({ navigation, route }) {
 
 
     const contaPessoas = async () => {
-        const colecao = query(collection(db, "Salas", "corrida", "sala"), where('nomeCorrida', '==', nomeCorrida));
+        const colecao = query(collection(db, "Salas", "ciclismo", "sala"), where('nomeCiclismo', '==', nomeCiclismo));
         const querySnapshotteste = await getDocs(colecao)
         const list = []
 
@@ -190,8 +195,8 @@ export default function SalaSelecionada({ navigation, route }) {
 
     useEffect(() => {
         // {latitude:String = destination[0]}  {longitude:String = destination[1]}
-        setDest(destination);
-        setOrig(origin);
+        //setDest([destination.latitude, destination.longitude]);
+        //setOrig([origin.latitude, origin.longitude]);
         trocaData();
 
 
@@ -257,7 +262,7 @@ export default function SalaSelecionada({ navigation, route }) {
 
             </MapView>
             <View style={styles.titleSala}>
-                <Text style={styles.txtBtn}>Percurso: {nomeCorrida}</Text>
+                <Text style={styles.txtBtn}>Percurso: {nomeCiclismo}</Text>
                 <Text style={styles.txtBtn}>Data: {dataSala} às {horaGrupo}</Text>
                 <Text style={styles.txtBtn}>Participantes: {qtdPessoas} / {membros}</Text>
                 <Text style={styles.txtBtn}>Distância: {distancia} M</Text>

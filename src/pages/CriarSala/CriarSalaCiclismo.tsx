@@ -16,7 +16,7 @@ import { where, query, getDocs, onSnapshot, DocumentData } from "firebase/firest
 import { Empty } from "react-admin";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function CriarSalaCorrida({ navigation, route }) {
+export default function CriarSalaCiclismo({ navigation, route }) {
 
     const { destino, destinoDois, dist } = route.params;
 
@@ -25,13 +25,13 @@ export default function CriarSalaCorrida({ navigation, route }) {
     const [distance, setDistance] = useState();
     const auth = getAuth();
     const [membros, setMembros] = useState(0);
-    const [nomeCorrida, setNomeCorrida] = useState('')
+    const [nomeCiclismo, setNomeCiclismo] = useState('')
     const [descricao, setDescricao] = useState('')
     const [value, setValue] = useState();
     const [idSala, setUser] = useState('');
     const [modalCalendarVisible, setModalCalendarVisible] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const idEsporte = 'corrida';
+    const idEsporte = 'ciclismo';
     const [dataSala, setDataSala] = useState('');
     const [horaSala, setHoraSala] = useState('');
     const [image, setImage] = useState('')
@@ -66,7 +66,7 @@ export default function CriarSalaCorrida({ navigation, route }) {
     }
 
     const mapChange = () => {
-        navigation.navigate('MapCorrida')
+        navigation.navigate('MapCiclismo')
 
     }
 
@@ -144,9 +144,9 @@ export default function CriarSalaCorrida({ navigation, route }) {
             
            
 
-            const docRef = await addDoc(collection(db, "Salas", "corrida","sala"), {
+            const docRef = await addDoc(collection(db, "Salas", "ciclismo","sala"), {
                 descricao: descricao,
-                nomeCorrida: nomeCorrida,
+                nomeCiclismo: nomeCiclismo,
                 criador: idSala,
                 membros: membros,
                 dataGrupo: dataSala,
@@ -242,7 +242,7 @@ export default function CriarSalaCorrida({ navigation, route }) {
 
     const criargruposala = async () => {
         const docRef = await addDoc(collection(db, "chats"), {
-            nome: nomeCorrida,
+            nome: nomeCiclismo,
             Image: image,
             dcid:idgruposala+idSala,
             participantes: [idSala],
@@ -263,11 +263,11 @@ export default function CriarSalaCorrida({ navigation, route }) {
 
 
         <View style={styles.container}>
-            <ImageBackground style={styles.image} source={require('../img/run_background.jpg')} imageStyle={{ opacity: 0.4, }}>
+            <ImageBackground style={styles.image} source={require('../img/bike_background.jpg')} imageStyle={{ opacity: 0.4, }}>
                 <ScrollView>
                     <TextInput style={styles.input}
-                        onChangeText={setNomeCorrida}
-                        value={nomeCorrida}
+                        onChangeText={setNomeCiclismo}
+                        value={nomeCiclismo}
                         placeholder="Nome da Sala:"
                         placeholderTextColor={'#000'}
                     />

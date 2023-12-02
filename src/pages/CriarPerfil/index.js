@@ -107,8 +107,8 @@ export default function CriarPerfil({ navigation }) {
 
             .then(
                 navigation.navigate("Home"),
-                alert('Cadastrado com sucesso, tenha uma boa experiência!!!'),
-                console.log(a),
+                alert('Cadastrado com sucesso, tenha uma boa experiência!!!')
+                
                
             ).catch((error) => {
                 setErrorLogin(true)

@@ -15,7 +15,7 @@ const Mensagens = ({ navigation }) => {
     const user = auth.currentUser;
     const iduser = user.uid
     const [grupos, setGrupos] = useState([])
-console.log(iduser)
+
 
     useEffect(() => {
 

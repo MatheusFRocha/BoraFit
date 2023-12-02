@@ -28,11 +28,12 @@ import CriarSalaCorrida from './src/pages/CriarSalaCorrida'
 import MapCorrida from './src/pages/CriarSalaCorrida/mapCorrida'
 import Academia from './src/pages/CriarSala/academia';
 import Futebol from './src/pages/CriarSala/futebol';
-import Ciclismo from './src/pages/CriarSala/ciclismo';
 import SelectCorrida from './src/pages/SelectSala/SelectCorrida';
 import SelectCiclismo from './src/pages/SelectSala/SelectCiclismo';
 import SalaSelecionada from './src/pages/SelectSala/SalaSelecionada';
 import MapCiclismo from './src/pages/CriarSala/MapCiclismo';
+import SalaSelecionadaCicle from './src/pages/SelectSala/SalaSelecionadaCicle';
+import CriarSalaCiclismo from './src/pages/CriarSala/CriarSalaCiclismo';
 
 
 
@@ -90,6 +91,17 @@ export default function App() {
             headerTransparent: true,
             headerShown: false,
           }}
+          name="CriarSalaCiclismo"
+          component={CriarSalaCiclismo}
+
+        />
+
+<Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
           name="SelectCorrida"
           component={SelectCorrida}
 
@@ -114,6 +126,16 @@ export default function App() {
           }}
           name="SalaSelecionada"
           component={SalaSelecionada}
+
+        />
+        <Stack.Screen
+          options={{
+            title: '',
+            headerTransparent: true,
+            headerShown: false,
+          }}
+          name="SalaSelecionadaCicle"
+          component={SalaSelecionadaCicle}
 
         />
 
@@ -172,16 +194,6 @@ export default function App() {
 
         />
 
-<Stack.Screen
-          options={{
-            title: '',
-            headerTransparent: true,
-            headerShown: false,
-          }}
-          name="ciclismo"
-          component={Ciclismo}
-
-        />
 
 <Stack.Screen
           options={{

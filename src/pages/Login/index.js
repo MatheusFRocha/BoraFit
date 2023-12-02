@@ -19,8 +19,8 @@ import { getAuth, signInWithPopup } from "firebase/auth";
 
 export default function Login({ navigation }) {
 
-    const [email, setEmail] = useState('j@gmail.com')
-    const [password, setSenha] = useState("123123")
+    const [email, setEmail] = useState('')
+    const [password, setSenha] = useState("")
 
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
@@ -228,16 +228,16 @@ const logarGoogle =  () => {
 
                     >Esqueci minha senha</Text>
 
-                </TouchableOpacity>
+                {/*</TouchableOpacity>
                    <TouchableOpacity style={styles.botaoRegistro}
                     onPress={() => {logarGoogle()}}
                 >
                     <Text style={styles.RegistroText}
 
 
-                    >Google</Text>
+                    >Google</Text>*/}
 
-                </TouchableOpacity>
+            </TouchableOpacity>
 
 
 

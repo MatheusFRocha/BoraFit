@@ -136,7 +136,7 @@ export default function MapCiclismo({ navigation }) {
         <View style={{marginBottom: 50, alignItems: 'center'}}>
         <Pressable
           style={styles.botao}
-          onPress={() => navigation.navigate("ciclismo", { destino: destination, destinoDois:destinationTwo, dist:distancia})}
+          onPress={() => navigation.navigate("CriarSalaCiclismo", { destino: destination, destinoDois:destinationTwo, dist:distancia})}
         >
           <Text style={styles.txtBtn} ><MaterialCommunityIcons name="check" color={"#000"} size={20} />Feito</Text>
         </Pressable>

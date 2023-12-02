@@ -4,6 +4,7 @@ import Configuracoes from '../Configuracoes';
 import Mensagens from '../Mensagens';
 import Categorias from '../Categorias';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Perfil from '../Perfil';
 
 
 const Tab = createBottomTabNavigator();
@@ -28,7 +29,7 @@ export default function MyTabs() {
                 tabBarIcon: ({ color, size }) => (
                     <MaterialCommunityIcons name="account-cog" color={color} size={size} />
                   ),
-            }} name="Configurações" component={Configuracoes} />
+            }} name="Perfil" component={Perfil} />
             <Tab.Screen options={{
 
                 headerTransparent: true, headerShown: false,

@@ -150,7 +150,7 @@ export default function Perfil({ navigation }) {
         
                     .then(
                         alert('Alterado com sucesso'),
-                        console.log(a),
+                        
                        
                     ).catch((error) => {
                         setErrorLogin(true)
@@ -246,7 +246,7 @@ export default function Perfil({ navigation }) {
 
 
         >
-            <Text style={styles.botaoenvio} >Pronto</Text>
+            <Text style={styles.botaoenvio} >Alterar</Text>
         </TouchableOpacity>
 
     </KeyboardAvoidingView >
